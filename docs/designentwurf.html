@@ -3,24 +3,27 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
-/* Layout: Seite = ruhiges Plandokument; der Designentwurf sitzt oben als Reihe aus vier Handy-Screens. */
+/* Layout: Seite = ruhiges Plandokument; der Designentwurf sitzt oben als Reihe aus fünf Handy-Screens. */
 :root{
   /* Seiten-Tokens (hell) */
   --bg:#FBF7FA; --surface:#FFFFFF; --fg:#3B2F45; --muted:#7A6C86; --line:#EADFEA;
   --accent:#E8789A; --accent-ink:#B8466C; --mint:#9FDCC8; --butter:#FFE3A3; --sky:#BFD7F5;
+  --new-bg:#FFF1C9; --new-fg:#6B4E00;
   /* Spiel-Tokens: feste Pastellwelt, in beiden Themes gleich */
   --g-wall-top:#E6DDF7; --g-wall-bot:#FCE3EA; --g-floor:#F6D9B8; --g-floor-line:#EBC69F;
   --g-ink:#4A3557; --g-pink:#F28DAE; --g-mint:#8ED5BF; --g-butter:#FFD98A; --g-sky:#A9CBF2;
-  --g-skin:#F7D4BF; --g-hair:#B98458; --g-white:#FFFFFF; --g-red:#F07A7A;
+  --g-skin:#F7D4BF; --g-hair:#B8935C; --g-white:#FFFFFF; --g-red:#F07A7A;
+  --g-lady:#EE7B72; --g-dot:#4A3557; --g-tomato:#F26B5B; --g-leaf:#6CBF7E;
+  --g-pug:#E3C49A; --g-pug-dark:#5B4636;
   --display:"Fredoka","Baloo 2","Trebuchet MS",system-ui,sans-serif;
   --body:"Nunito","Segoe UI",system-ui,sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#1E1824; --surface:#2A2232; --fg:#F3EAF4; --muted:#B7A8C2; --line:#3D3247;
-  --accent:#F293B1; --accent-ink:#F7B3C8; color-scheme:dark}}
+  --accent:#F293B1; --accent-ink:#F7B3C8; --new-bg:#4A3C17; --new-fg:#FFE3A3; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1E1824; --surface:#2A2232; --fg:#F3EAF4; --muted:#B7A8C2; --line:#3D3247;
-  --accent:#F293B1; --accent-ink:#F7B3C8; color-scheme:dark}
+  --accent:#F293B1; --accent-ink:#F7B3C8; --new-bg:#4A3C17; --new-fg:#FFE3A3; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
@@ -36,6 +39,8 @@ p{margin:0}
 section{display:flex;flex-direction:column;gap:20px}
 .prose{max-width:68ch;display:flex;flex-direction:column;gap:12px}
 .prose ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.new{display:inline-block;font-family:var(--body);font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--new-bg);color:var(--new-fg);border-radius:99px;padding:1px 8px;vertical-align:middle;margin-left:6px}
 
 header{display:flex;flex-direction:column;gap:14px}
 .meta{display:flex;flex-wrap:wrap;gap:8px}
@@ -44,75 +49,116 @@ header{display:flex;flex-direction:column;gap:14px}
 
 /* ---------- Handy-Screens ---------- */
 .screens{overflow-x:auto;padding:8px 4px 20px;margin:0 -4px}
-.screens-row{display:grid;grid-template-columns:repeat(4,240px);gap:24px;justify-content:start;width:max-content}
-@media (min-width:1080px){.screens-row{width:auto;justify-content:space-between}}
+.screens-row{display:grid;grid-template-columns:repeat(5,240px);gap:24px;width:max-content}
 figure{margin:0;display:flex;flex-direction:column;gap:10px}
 figcaption{font-size:.9rem;color:var(--muted)}
 figcaption b{color:var(--fg);font-family:var(--display);font-weight:600;font-size:1rem;display:block}
 .phone{position:relative;width:240px;aspect-ratio:9/19;border-radius:34px;border:7px solid #2F2536;overflow:hidden;
   background:linear-gradient(var(--g-wall-top),var(--g-wall-bot) 72%);color:var(--g-ink);font-family:var(--display);
   box-shadow:0 18px 40px -18px rgba(70,40,90,.45)}
-.phone .floor{position:absolute;left:0;right:0;bottom:0;height:27%;background:var(--g-floor);
+.phone .floor{position:absolute;left:0;right:0;bottom:0;height:27%;background-color:var(--g-floor);
   background-image:repeating-linear-gradient(90deg,transparent 0 46px,var(--g-floor-line) 46px 48px)}
+.phone .floor.scroll{animation:floor .6s linear infinite}
 .bunting{position:absolute;top:30px;left:-6px;right:-6px;height:40px}
 .abs{position:absolute}
 .center{left:0;right:0;text-align:center}
 
 /* Start */
-.title-big{top:70px;font-size:2.1rem;font-weight:700;line-height:1;letter-spacing:-.01em}
+.title-big{top:62px;font-size:2.1rem;font-weight:700;line-height:1;letter-spacing:-.01em}
 .title-big span{display:block;color:var(--g-pink);font-size:2.5rem}
-.sub{top:162px;font-family:var(--body);font-weight:700;font-size:.82rem;padding:0 26px;color:#6E5A7C}
+.sub{top:154px;font-family:var(--body);font-weight:700;font-size:.82rem;padding:0 26px;color:#6E5A7C}
 .btn{display:block;margin:0 auto;border:0;border-radius:18px;font-family:var(--display);font-weight:600;font-size:1.05rem;padding:12px 22px;
   background:var(--g-pink);color:var(--g-white);box-shadow:0 4px 0 #D4668B}
 .btn.alt{background:var(--g-white);color:var(--g-ink);box-shadow:0 3px 0 #E3D5E6;font-size:.9rem;padding:9px 18px}
+.seg{display:inline-flex;background:rgba(255,255,255,.7);border-radius:14px;padding:3px;font-size:.78rem;font-weight:600;margin:0 auto}
+.seg span{padding:5px 12px;border-radius:11px;color:#8F7A9C}
+.seg span.on{background:var(--g-white);color:var(--g-ink);box-shadow:0 2px 0 #E3D5E6}
 .party{bottom:12px;font-family:var(--body);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8F7A9C}
 
 /* Spiel */
-.hud{top:14px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start}
-.score{background:rgba(255,255,255,.8);border-radius:14px;padding:4px 10px;line-height:1.1}
-.score b{font-size:1.5rem;display:block}
-.score small{font-family:var(--body);font-weight:800;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:#8F7A9C}
-.meter{top:72px;left:22px;right:22px;height:14px;border-radius:99px;
+.hud{top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start}
+.score{background:rgba(255,255,255,.82);border-radius:14px;padding:4px 10px;line-height:1.1}
+.score b{font-size:1.45rem;display:inline-block;font-variant-numeric:tabular-nums}
+.score .mult{display:inline-block;margin-left:4px;font-size:.8rem;font-weight:700;background:var(--g-butter);border-radius:8px;padding:0 5px;vertical-align:4px}
+.score small{display:block;font-family:var(--body);font-weight:800;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:#8F7A9C}
+.goals{top:66px;left:14px;right:14px;display:flex;align-items:center;gap:0}
+.goals .av{width:30px;height:30px;border-radius:50%;background:var(--g-white);border:2px solid #E7DCEB;flex:none;overflow:hidden}
+.goals .av.done{border-color:var(--g-mint)}
+.goals .av.now{border-color:var(--g-pink);width:36px;height:36px}
+.goals .bar{flex:1;height:5px;background:#E7DCEB;border-radius:3px;margin:0 2px}
+.goals .bar.done{background:var(--g-mint)}
+.goals .bar.half{background:linear-gradient(90deg,var(--g-pink) 60%,#E7DCEB 60%)}
+.goal-label{top:106px;font-family:var(--body);font-size:.68rem;font-weight:800;color:#8F7A9C}
+.meter{top:128px;left:22px;right:22px;height:12px;border-radius:99px;
   background:linear-gradient(90deg,var(--g-red) 0 12%,var(--g-butter) 12% 30%,var(--g-mint) 30% 70%,var(--g-butter) 70% 88%,var(--g-red) 88%);
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
-.needle{position:absolute;top:-5px;width:6px;height:24px;border-radius:3px;background:var(--g-ink);left:calc(64% - 3px);animation:needle 2.4s ease-in-out infinite}
-.meter-label{top:92px;font-family:var(--body);font-size:.66rem;font-weight:800;color:#8F7A9C;letter-spacing:.06em;text-transform:uppercase}
-.elli-walk{left:62px;bottom:21%;width:92px;transform-origin:50% 96%;animation:wobble 2.4s ease-in-out infinite}
-.tapzones{left:10px;right:10px;bottom:12px;display:flex;gap:8px}
-.tap{flex:1;height:58px;border-radius:16px;background:rgba(255,255,255,.55);border:2px dashed rgba(74,53,87,.25);
+.needle{position:absolute;top:-5px;width:6px;height:22px;border-radius:3px;background:var(--g-ink);left:calc(64% - 3px);animation:needle 2.4s ease-in-out infinite}
+.deco{left:0;bottom:27%;width:480px;height:170px;animation:deco 6s linear infinite}
+.deco svg{position:absolute}
+.elli-walk{left:44px;bottom:calc(27% - 8px);width:84px;transform-origin:50% 96%;animation:wobble 2.4s ease-in-out infinite}
+.elli-walk .bodybob{animation:bob-step .3s ease-in-out infinite alternate}
+.elli-walk .leg-l{transform-origin:42px 102px;animation:step .6s ease-in-out infinite alternate}
+.elli-walk .leg-r{transform-origin:58px 102px;animation:step .6s ease-in-out infinite alternate-reverse}
+.elli-walk .arm-l{transform-origin:24px 66px;animation:arm 1.2s ease-in-out infinite alternate}
+.elli-walk .arm-r{transform-origin:76px 66px;animation:arm 1.2s ease-in-out infinite alternate-reverse}
+.goal-person{right:-26px;bottom:calc(27% - 6px);width:96px}
+.tapzones{left:10px;right:10px;bottom:10px;display:flex;gap:8px}
+.tap{flex:1;height:52px;border-radius:16px;background:rgba(255,255,255,.55);border:2px dashed rgba(74,53,87,.25);
   display:flex;align-items:center;justify-content:center;gap:6px;font-size:.78rem;font-weight:600}
 .tap.hot{background:rgba(255,255,255,.85);border-color:var(--g-pink);color:#C24F78}
 .tap svg{width:16px;height:16px}
-.bubble{top:120px;right:14px;background:var(--g-white);border-radius:14px 14px 4px 14px;padding:6px 10px;font-size:.78rem;font-weight:600;max-width:120px;line-height:1.2}
+.bubble{top:156px;left:14px;background:var(--g-white);border-radius:14px 14px 14px 4px;padding:5px 10px;font-size:.76rem;font-weight:600;line-height:1.2}
+.pop{font-size:.9rem;font-weight:700;color:var(--g-pink);animation:pop 2s ease-out infinite}
+
+/* Ziel erreicht */
+.reach-title{top:56px;font-size:1.55rem;font-weight:700;line-height:1.1;padding:0 18px}
+.reach-title span{color:var(--g-pink)}
+.big-av{left:50%;top:132px;width:120px;height:120px;margin-left:-60px;border-radius:50%;background:var(--g-white);border:5px solid var(--g-pink);overflow:hidden}
+.hearts{left:0;right:0;top:118px;height:150px}
+.bonus{top:268px;font-size:1.3rem;font-weight:700}
+.bonus small{display:block;font-family:var(--body);font-size:.75rem;font-weight:800;color:#8F7A9C}
+.next{bottom:22px;left:16px;right:16px;background:rgba(255,255,255,.85);border-radius:16px;padding:8px 12px;display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600}
+.next .av{width:34px;height:34px;border-radius:50%;overflow:hidden;border:2px solid #E7DCEB;flex:none;background:#fff}
+.next small{display:block;font-family:var(--body);font-weight:700;font-size:.68rem;color:#8F7A9C}
 
 /* Plumps */
 .overlay{inset:0;background:rgba(74,53,87,.28)}
-.card{left:14px;right:14px;top:118px;background:var(--g-white);border-radius:24px;padding:58px 16px 18px;text-align:center;display:flex;flex-direction:column;gap:10px}
+.card{left:14px;right:14px;top:118px;background:var(--g-white);border-radius:24px;padding:58px 16px 18px;text-align:center;display:flex;flex-direction:column;gap:9px}
 .burst{left:50%;top:44px;width:150px;margin-left:-75px}
 .plumps{font-size:1.9rem;font-weight:700;color:var(--g-pink);line-height:1}
-.result{font-family:var(--body);font-weight:700;font-size:.86rem;color:#6E5A7C}
+.result{font-family:var(--body);font-weight:700;font-size:.82rem;color:#6E5A7C}
 .result b{font-family:var(--display);font-size:1.6rem;color:var(--g-ink);display:block;line-height:1.2}
-.field{border:2px solid #E7DCEB;border-radius:14px;padding:9px 12px;font-family:var(--body);font-weight:700;font-size:.9rem;color:#A08FAC;text-align:left;display:flex;justify-content:space-between}
+.breakdown{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-family:var(--body);font-size:.72rem;font-weight:700;color:#8F7A9C;text-align:left;padding:0 6px}
+.breakdown span:nth-child(even){text-align:right;font-variant-numeric:tabular-nums;color:var(--g-ink)}
+.field{border:2px solid #E7DCEB;border-radius:14px;padding:8px 12px;font-family:var(--body);font-weight:700;font-size:.88rem;color:#A08FAC;text-align:left;display:flex;justify-content:space-between}
 .field .caret{width:2px;height:18px;background:var(--g-pink);animation:blink 1s steps(1) infinite}
-.newrec{display:inline-block;margin:0 auto;font-size:.7rem;font-weight:600;background:var(--g-butter);border-radius:99px;padding:2px 10px}
 
 /* Bestenliste */
 .board-title{top:58px;font-size:1.7rem;font-weight:700}
 .board{left:14px;right:14px;top:110px;display:flex;flex-direction:column;gap:6px}
-.row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;background:rgba(255,255,255,.75);border-radius:14px;padding:7px 10px;font-weight:600;font-size:.92rem}
-.row .rank{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;background:#EFE7F2}
+.row{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:8px;background:rgba(255,255,255,.75);border-radius:14px;padding:6px 10px;font-weight:600;font-size:.9rem;line-height:1.15}
+.row small{display:block;font-family:var(--body);font-size:.62rem;font-weight:800;color:#8F7A9C}
+.row .rank{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:.78rem;background:#EFE7F2}
 .row .pts{font-variant-numeric:tabular-nums}
 .row.r1{background:var(--g-white);box-shadow:0 3px 0 #EADCEA}.row.r1 .rank{background:#FFD45E}
 .row.r2 .rank{background:#DCDDE8}.row.r3 .rank{background:#F2C29B}
 .row.me{outline:2px solid var(--g-pink)}
 .sample{top:92px;font-family:var(--body);font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#A08FAC}
 
-@keyframes wobble{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(13deg)}}
-@keyframes needle{0%,100%{left:calc(41% - 3px)}50%{left:calc(70% - 3px)}}
+@keyframes wobble{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(12deg)}}
+@keyframes needle{0%,100%{left:calc(42% - 3px)}50%{left:calc(69% - 3px)}}
 @keyframes blink{50%{opacity:0}}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes bob-step{from{transform:translateY(0)}to{transform:translateY(-3px)}}
+@keyframes step{from{transform:rotate(-22deg)}to{transform:rotate(22deg)}}
+@keyframes arm{from{transform:rotate(-10deg)}to{transform:rotate(10deg)}}
+@keyframes floor{from{background-position-x:0}to{background-position-x:-48px}}
+@keyframes deco{from{transform:translateX(0)}to{transform:translateX(-240px)}}
+@keyframes pop{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-24px)}}
 .bob{animation:bob 3s ease-in-out infinite}
-@media (prefers-reduced-motion:reduce){.elli-walk,.needle,.bob,.field .caret{animation:none}.elli-walk{transform:rotate(12deg)}}
+@media (prefers-reduced-motion:reduce){
+  .elli-walk,.elli-walk *,.needle,.bob,.field .caret,.deco,.phone .floor.scroll,.pop{animation:none!important}
+  .elli-walk{transform:rotate(10deg)}.pop{opacity:1}}
 
 /* Palette */
 .palette{display:flex;flex-wrap:wrap;gap:10px}
@@ -121,22 +167,31 @@ figcaption b{color:var(--fg);font-family:var(--display);font-weight:600;font-siz
 .fonts{display:flex;flex-wrap:wrap;gap:24px;align-items:baseline;color:var(--muted);font-size:.9rem}
 .fonts .f1{font-family:var(--display);font-size:1.6rem;font-weight:700;color:var(--fg)}
 .fonts .f2{font-family:var(--body);font-size:1.1rem;font-weight:700;color:var(--fg)}
+.cast{display:flex;flex-wrap:wrap;gap:14px}
+.cast div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.82rem;font-weight:700}
+.cast svg{width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid var(--line)}
 
-/* Mechanik / Ideen */
+/* Mechanik */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
 .box p,.box li{font-size:.95rem}
-.box ul{margin:0;padding-left:1.1em}
+.box ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px}
 .tag{align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 10px;border-radius:99px;background:var(--line);color:var(--fg)}
 .tag.pick{background:var(--accent);color:#fff}
 .box.pick{border:2px solid var(--accent)}
+.items{display:flex;flex-direction:column;gap:10px}
+.item{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center}
+.item svg{width:36px;height:36px}
+.item b{font-family:var(--display);font-weight:600}
+.item span.pts{font-weight:800;font-variant-numeric:tabular-nums;color:var(--accent-ink);white-space:nowrap}
+.item p{font-size:.88rem;color:var(--muted)}
 
 .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:.92rem}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 tr:last-child td{border-bottom:0}
-td.dots{white-space:nowrap;color:var(--accent-ink);letter-spacing:2px}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 
 /* Architektur */
 .flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
@@ -148,7 +203,7 @@ td.dots{white-space:nowrap;color:var(--accent-ink);letter-spacing:2px}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--line);padding:1px 6px;border-radius:6px}
 
 /* Zeitplan */
-.timeline{display:flex;flex-direction:column;gap:0;border-left:3px solid var(--line);margin-left:8px}
+.timeline{display:flex;flex-direction:column;border-left:3px solid var(--line);margin-left:8px}
 .step{position:relative;padding:0 0 22px 24px;display:flex;flex-direction:column;gap:4px;max-width:72ch}
 .step::before{content:"";position:absolute;left:-10px;top:5px;width:17px;height:17px;border-radius:50%;background:var(--surface);border:3px solid var(--accent)}
 .step.done::before{background:var(--accent)}
@@ -162,12 +217,33 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;bac
 .questions li::before{counter-increment:q;content:counter(q);position:absolute;left:14px;top:11px;width:26px;height:26px;border-radius:50%;background:var(--butter);color:#4A3557;display:grid;place-items:center;font-weight:800;font-size:.85rem}
 .sources{font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
 .sources a{color:var(--accent-ink)}
-a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+a:focus-visible,button:focus-visible,.screens:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
-    <!-- Elli stehend, Arme zum Balancieren ausgestreckt -->
+    <!-- Elli: dunkelblond, Marienkäfer-Kleidchen -->
+    <g id="elli-head">
+      <circle cx="50" cy="40" r="24" fill="var(--g-skin)"/>
+      <path d="M28 36 Q30 14 50 15 Q70 15 73 34 Q64 24 54 26 Q46 21 40 29 Q33 28 28 36 Z" fill="var(--g-hair)"/>
+      <path d="M50 16 q-6 -10 2 -12 q6 1 0 8" fill="none" stroke="var(--g-hair)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M62 19 l10 -7 l2 12 z M62 19 l-2 -12 l12 4 z" fill="var(--g-pink)"/>
+      <circle cx="63" cy="18" r="3" fill="#E06F96"/>
+      <ellipse cx="42" cy="42" rx="2.6" ry="3.4" fill="var(--g-ink)"/>
+      <ellipse cx="58" cy="42" rx="2.6" ry="3.4" fill="var(--g-ink)"/>
+      <circle cx="36" cy="50" r="4" fill="var(--g-pink)" opacity=".45"/>
+      <circle cx="64" cy="50" r="4" fill="var(--g-pink)" opacity=".45"/>
+      <path d="M45 51 Q50 56 55 51" fill="none" stroke="var(--g-ink)" stroke-width="2.2" stroke-linecap="round"/>
+    </g>
+    <g id="elli-dress">
+      <path d="M34 66 Q50 60 66 66 L76 104 Q50 112 24 104 Z" fill="var(--g-lady)"/>
+      <path d="M34 66 L22 66" stroke="var(--g-lady)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M66 66 L78 66" stroke="var(--g-lady)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M50 64 L50 108" stroke="var(--g-dot)" stroke-width="1.6" opacity=".5"/>
+      <circle cx="38" cy="82" r="3.4" fill="var(--g-dot)"/><circle cx="62" cy="80" r="3.4" fill="var(--g-dot)"/>
+      <circle cx="34" cy="98" r="3.4" fill="var(--g-dot)"/><circle cx="66" cy="97" r="3.4" fill="var(--g-dot)"/>
+      <circle cx="44" cy="94" r="2.6" fill="var(--g-dot)"/><circle cx="57" cy="92" r="2.6" fill="var(--g-dot)"/>
+    </g>
     <symbol id="elli" viewBox="0 0 100 140">
       <ellipse cx="50" cy="134" rx="24" ry="5" fill="#000" opacity=".10"/>
       <rect x="37" y="102" width="10" height="26" rx="5" fill="var(--g-skin)"/>
@@ -176,33 +252,21 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
       <ellipse cx="59" cy="129" rx="8" ry="5" fill="var(--g-pink)"/>
       <path d="M22 66 L10 52" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
       <path d="M78 66 L90 52" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
-      <path d="M34 66 Q50 60 66 66 L76 104 Q50 112 24 104 Z" fill="var(--g-mint)"/>
-      <path d="M34 66 Q28 66 22 66" stroke="var(--g-mint)" stroke-width="10" stroke-linecap="round"/>
-      <path d="M66 66 Q72 66 78 66" stroke="var(--g-mint)" stroke-width="10" stroke-linecap="round"/>
-      <text x="50" y="94" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="20" fill="var(--g-white)">1</text>
-      <circle cx="50" cy="40" r="24" fill="var(--g-skin)"/>
-      <path d="M30 34 Q34 14 52 16 Q68 17 72 32 Q62 24 52 26 Q44 22 40 30 Q34 28 30 34 Z" fill="var(--g-hair)"/>
-      <path d="M50 17 q-6 -10 2 -12 q6 1 0 8" fill="none" stroke="var(--g-hair)" stroke-width="3" stroke-linecap="round"/>
-      <path d="M62 19 l10 -7 l2 12 z M62 19 l-2 -12 l12 4 z" fill="var(--g-pink)"/>
-      <circle cx="63" cy="18" r="3" fill="#E06F96"/>
-      <ellipse cx="42" cy="42" rx="2.6" ry="3.4" fill="var(--g-ink)"/>
-      <ellipse cx="58" cy="42" rx="2.6" ry="3.4" fill="var(--g-ink)"/>
-      <circle cx="36" cy="50" r="4" fill="var(--g-pink)" opacity=".45"/>
-      <circle cx="64" cy="50" r="4" fill="var(--g-pink)" opacity=".45"/>
-      <path d="M45 51 Q50 56 55 51" fill="none" stroke="var(--g-ink)" stroke-width="2.2" stroke-linecap="round"/>
+      <use href="#elli-dress"/>
+      <use href="#elli-head"/>
     </symbol>
-    <!-- Elli sitzend nach dem Plumps -->
     <symbol id="elli-sit" viewBox="0 0 120 110">
       <ellipse cx="60" cy="104" rx="40" ry="5" fill="#000" opacity=".10"/>
       <rect x="22" y="88" width="34" height="11" rx="5.5" fill="var(--g-skin)"/>
       <rect x="64" y="88" width="34" height="11" rx="5.5" fill="var(--g-skin)"/>
       <ellipse cx="20" cy="92" rx="6" ry="8" fill="var(--g-pink)"/>
       <ellipse cx="100" cy="92" rx="6" ry="8" fill="var(--g-pink)"/>
-      <path d="M42 56 Q60 50 78 56 L86 94 Q60 102 34 94 Z" fill="var(--g-mint)"/>
+      <path d="M42 56 Q60 50 78 56 L86 94 Q60 102 34 94 Z" fill="var(--g-lady)"/>
+      <circle cx="50" cy="72" r="3.2" fill="var(--g-dot)"/><circle cx="70" cy="70" r="3.2" fill="var(--g-dot)"/><circle cx="46" cy="86" r="3.2" fill="var(--g-dot)"/><circle cx="74" cy="86" r="3.2" fill="var(--g-dot)"/>
       <path d="M40 60 L28 76" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
       <path d="M80 60 L92 76" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
       <circle cx="60" cy="32" r="23" fill="var(--g-skin)"/>
-      <path d="M41 27 Q45 8 62 10 Q77 11 80 26 Q71 18 62 20 Q54 16 50 24 Q45 22 41 27 Z" fill="var(--g-hair)"/>
+      <path d="M39 28 Q41 7 60 8 Q79 8 82 27 Q73 18 64 20 Q56 15 50 23 Q44 21 39 28 Z" fill="var(--g-hair)"/>
       <path d="M71 13 l10 -7 l2 12 z M71 13 l-2 -12 l12 4 z" fill="var(--g-pink)"/>
       <path d="M48 33 q4 -4 8 0" fill="none" stroke="var(--g-ink)" stroke-width="2.2" stroke-linecap="round"/>
       <path d="M64 33 q4 -4 8 0" fill="none" stroke="var(--g-ink)" stroke-width="2.2" stroke-linecap="round"/>
@@ -210,18 +274,120 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
       <circle cx="74" cy="41" r="4" fill="var(--g-pink)" opacity=".5"/>
       <ellipse cx="60" cy="44" rx="4" ry="3.2" fill="var(--g-ink)"/>
     </symbol>
+
+    <!-- Portraits der Ziele (Platzhalter-Aussehen) -->
+    <symbol id="av-mama" viewBox="0 0 60 60">
+      <rect width="60" height="60" fill="#FCE3EA"/>
+      <path d="M12 60 Q10 22 30 16 Q50 22 48 60 Z" fill="#8A5A3C"/>
+      <circle cx="30" cy="30" r="14" fill="var(--g-skin)"/>
+      <path d="M16 28 Q18 13 30 13 Q43 13 44 28 Q36 20 30 22 Q22 20 16 28 Z" fill="#8A5A3C"/>
+      <circle cx="25" cy="31" r="1.8" fill="var(--g-ink)"/><circle cx="35" cy="31" r="1.8" fill="var(--g-ink)"/>
+      <path d="M26 37 Q30 40 34 37" fill="none" stroke="var(--g-ink)" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M14 60 Q30 46 46 60 Z" fill="var(--g-pink)"/>
+    </symbol>
+    <symbol id="av-papa" viewBox="0 0 60 60">
+      <rect width="60" height="60" fill="#DDEBFB"/>
+      <circle cx="30" cy="30" r="14" fill="var(--g-skin)"/>
+      <path d="M16 27 Q16 13 30 13 Q44 13 44 27 Q40 19 30 20 Q20 19 16 27 Z" fill="#6B5040"/>
+      <circle cx="25" cy="31" r="1.8" fill="var(--g-ink)"/><circle cx="35" cy="31" r="1.8" fill="var(--g-ink)"/>
+      <path d="M26 37 Q30 40 34 37" fill="none" stroke="var(--g-ink)" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M12 60 Q30 44 48 60 Z" fill="var(--g-sky)"/>
+    </symbol>
+    <symbol id="av-ruby" viewBox="0 0 60 60">
+      <rect width="60" height="60" fill="#FFF0CC"/>
+      <circle cx="13" cy="30" r="6" fill="#B8935C"/><circle cx="47" cy="30" r="6" fill="#B8935C"/>
+      <circle cx="13" cy="30" r="2" fill="var(--g-pink)" transform="translate(4 -6)"/>
+      <circle cx="30" cy="32" r="13" fill="var(--g-skin)"/>
+      <path d="M17 30 Q18 17 30 17 Q42 17 43 30 Q38 23 30 24 Q22 23 17 30 Z" fill="#B8935C"/>
+      <circle cx="25" cy="33" r="1.8" fill="var(--g-ink)"/><circle cx="35" cy="33" r="1.8" fill="var(--g-ink)"/>
+      <path d="M25 38 Q30 43 35 38" fill="none" stroke="var(--g-ink)" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M16 60 Q30 48 44 60 Z" fill="var(--g-mint)"/>
+    </symbol>
+    <symbol id="av-trude" viewBox="0 0 60 60">
+      <rect width="60" height="60" fill="#E9F6EF"/>
+      <ellipse cx="30" cy="33" rx="17" ry="15" fill="var(--g-pug)"/>
+      <path d="M13 24 Q10 34 17 36 Q19 28 19 22 Z" fill="var(--g-pug-dark)"/>
+      <path d="M47 24 Q50 34 43 36 Q41 28 41 22 Z" fill="var(--g-pug-dark)"/>
+      <ellipse cx="30" cy="39" rx="9" ry="7" fill="var(--g-pug-dark)"/>
+      <circle cx="23" cy="30" r="3" fill="#2E2229"/><circle cx="37" cy="30" r="3" fill="#2E2229"/>
+      <circle cx="24" cy="29" r="1" fill="#fff"/><circle cx="38" cy="29" r="1" fill="#fff"/>
+      <ellipse cx="30" cy="36" rx="3" ry="2" fill="#2E2229"/>
+      <path d="M28 43 q2 5 4 0 z" fill="var(--g-pink)"/>
+      <path d="M24 22 q6 -3 12 0" fill="none" stroke="#C9A77A" stroke-width="1.4" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- Papa als Ziel-Figur im Spiel -->
+    <symbol id="papa-full" viewBox="0 0 100 190">
+      <rect x="36" y="128" width="12" height="58" rx="6" fill="#5A6B85"/>
+      <rect x="52" y="128" width="12" height="58" rx="6" fill="#5A6B85"/>
+      <path d="M30 74 Q50 66 70 74 L72 134 L28 134 Z" fill="var(--g-sky)"/>
+      <path d="M32 80 L6 64" stroke="var(--g-sky)" stroke-width="12" stroke-linecap="round"/>
+      <path d="M68 80 L92 98" stroke="var(--g-sky)" stroke-width="12" stroke-linecap="round"/>
+      <circle cx="5" cy="62" r="6" fill="var(--g-skin)"/><circle cx="94" cy="99" r="6" fill="var(--g-skin)"/>
+      <circle cx="50" cy="44" r="22" fill="var(--g-skin)"/>
+      <path d="M28 40 Q28 18 50 18 Q72 18 72 40 Q66 28 50 29 Q34 28 28 40 Z" fill="#6B5040"/>
+      <circle cx="42" cy="46" r="2.4" fill="var(--g-ink)"/><circle cx="56" cy="46" r="2.4" fill="var(--g-ink)"/>
+      <path d="M43 55 Q49 60 55 55" fill="none" stroke="var(--g-ink)" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <!-- Trude von der Seite -->
+    <symbol id="trude-side" viewBox="0 0 90 60">
+      <ellipse cx="46" cy="58" rx="30" ry="3" fill="#000" opacity=".1"/>
+      <rect x="24" y="40" width="7" height="16" rx="3.5" fill="var(--g-pug)"/><rect x="56" y="40" width="7" height="16" rx="3.5" fill="var(--g-pug)"/>
+      <ellipse cx="44" cy="36" rx="26" ry="14" fill="var(--g-pug)"/>
+      <path d="M18 30 q-10 -8 -4 -14 q6 2 2 8" fill="none" stroke="var(--g-pug)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="70" cy="26" r="13" fill="var(--g-pug)"/>
+      <path d="M62 16 q-4 8 2 12 q3 -6 2 -12 z" fill="var(--g-pug-dark)"/>
+      <ellipse cx="79" cy="30" rx="7" ry="6" fill="var(--g-pug-dark)"/>
+      <circle cx="73" cy="23" r="2.4" fill="#2E2229"/>
+      <path d="M78 36 q2 6 5 1 z" fill="var(--g-pink)"/>
+    </symbol>
+
+    <!-- Sammelobjekte -->
+    <symbol id="tomato" viewBox="0 0 40 40">
+      <circle cx="20" cy="23" r="14" fill="var(--g-tomato)"/>
+      <ellipse cx="14" cy="18" rx="3.5" ry="5" fill="#fff" opacity=".35"/>
+      <path d="M20 10 l-7 -3 l4 5 l-6 1 l7 2 l2 5 l2 -5 l7 -2 l-6 -1 l4 -5 z" fill="var(--g-leaf)"/>
+    </symbol>
+    <symbol id="ladybug" viewBox="0 0 40 40">
+      <path d="M10 9 L14 14 M30 9 L26 14" stroke="var(--g-dot)" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="20" cy="14" r="6" fill="var(--g-dot)"/>
+      <path d="M6 24 a14 13 0 0 1 28 0 a14 13 0 0 1 -28 0 Z" fill="var(--g-lady)"/>
+      <path d="M20 12 L20 37" stroke="var(--g-dot)" stroke-width="2"/>
+      <circle cx="13" cy="21" r="2.8" fill="var(--g-dot)"/><circle cx="27" cy="21" r="2.8" fill="var(--g-dot)"/>
+      <circle cx="12" cy="30" r="2.4" fill="var(--g-dot)"/><circle cx="28" cy="30" r="2.4" fill="var(--g-dot)"/>
+    </symbol>
+    <symbol id="giraffe" viewBox="0 0 40 40">
+      <rect x="12" y="30" width="4" height="8" rx="2" fill="#E8B84A"/><rect x="24" y="30" width="4" height="8" rx="2" fill="#E8B84A"/>
+      <ellipse cx="20" cy="28" rx="11" ry="7" fill="var(--g-butter)"/>
+      <path d="M25 26 L28 10" stroke="var(--g-butter)" stroke-width="6" stroke-linecap="round"/>
+      <ellipse cx="30" cy="9" rx="6" ry="4.5" fill="var(--g-butter)"/>
+      <path d="M28 4 l0 -3 M32 4 l1 -3" stroke="#B8935C" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="31" cy="8" r="1.1" fill="var(--g-ink)"/>
+      <circle cx="16" cy="27" r="2" fill="#D9A55A"/><circle cx="22" cy="30" r="1.6" fill="#D9A55A"/><circle cx="26" cy="18" r="1.4" fill="#D9A55A"/><circle cx="12" cy="31" r="1.4" fill="#D9A55A"/>
+    </symbol>
+    <symbol id="block" viewBox="0 0 40 40">
+      <rect x="3" y="9" width="28" height="28" rx="5" fill="var(--g-sky)"/>
+      <text x="17" y="30" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="18" fill="#fff">E</text>
+    </symbol>
     <symbol id="balloon" viewBox="0 0 40 80">
       <path d="M20 46 Q16 60 22 78" fill="none" stroke="#9C8AA8" stroke-width="1.5"/>
       <ellipse cx="20" cy="22" rx="16" ry="20" fill="currentColor"/>
       <path d="M17 42 l3 5 l3 -5 z" fill="currentColor"/>
       <ellipse cx="14" cy="14" rx="4" ry="6" fill="#fff" opacity=".45"/>
     </symbol>
+    <symbol id="heart" viewBox="0 0 20 18">
+      <path d="M10 17 C-6 7 3 -4 10 4 C17 -4 26 7 10 17 Z" fill="var(--g-pink)"/>
+    </symbol>
     <symbol id="bunting" viewBox="0 0 240 40" preserveAspectRatio="none">
       <path d="M0 6 Q120 26 240 6" fill="none" stroke="#C9B6D6" stroke-width="1.5"/>
       <path d="M10 8 l14 2 l-6 16 z" fill="var(--g-pink)"/><path d="M40 12 l14 1 l-7 16 z" fill="var(--g-butter)"/>
       <path d="M70 14 l14 1 l-7 16 z" fill="var(--g-mint)"/><path d="M100 16 l14 0 l-7 16 z" fill="var(--g-sky)"/>
-      <path d="M130 16 l14 -1 l-7 16 z" fill="var(--g-pink)"/><path d="M160 14 l14 -1 l-7 16 z" fill="var(--g-butter)"/>
+      <path d="M130 16 l14 -1 l-7 16 z" fill="var(--g-lady)"/><path d="M160 14 l14 -1 l-7 16 z" fill="var(--g-butter)"/>
       <path d="M190 12 l14 -2 l-7 16 z" fill="var(--g-mint)"/><path d="M218 9 l14 -2 l-7 16 z" fill="var(--g-sky)"/>
+    </symbol>
+    <symbol id="plant" viewBox="0 0 50 90">
+      <path d="M25 60 Q10 40 12 20 Q22 34 25 60 Q28 30 38 14 Q42 40 25 60 Q34 44 46 40 Q40 58 25 62" fill="var(--g-leaf)"/>
+      <path d="M12 60 L38 60 L34 88 L16 88 Z" fill="var(--g-lady)"/>
     </symbol>
   </defs>
 </svg>
@@ -229,13 +395,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
 <div class="wrap">
 
 <header>
-  <span class="eyebrow">Designentwurf &amp; Plan · Ellis 1. Geburtstag</span>
+  <span class="eyebrow">Designentwurf &amp; Plan · Version 2</span>
   <h1>Elli lernt laufen</h1>
-  <p class="lead">Ein kleines Balance-Spiel fürs Handy. Die Gäste scannen einen QR-Code, helfen Elli bei ihren ersten Schritten und tragen sich in eine gemeinsame Bestenliste ein.</p>
+  <p class="lead">Ein kleines Balance-Spiel fürs Handy. Die Gäste scannen einen QR-Code, helfen Elli auf ihrem Weg zu Mama, Papa, Ruby und Trude und tragen sich in eine gemeinsame Bestenliste ein.</p>
   <div class="meta">
     <span class="chip"><i style="background:var(--g-pink)"></i>Familienfeier 14.11.</span>
     <span class="chip"><i style="background:var(--g-mint)"></i>5–10 Gäste</span>
-    <span class="chip"><i style="background:var(--g-butter)"></i>Läuft im Browser, ohne App</span>
+    <span class="chip"><i style="background:var(--g-butter)"></i>Läuft im Browser, ohne Ton</span>
     <span class="chip"><i style="background:var(--g-sky)"></i>Bestenliste in Google Tabelle</span>
   </div>
 </header>
@@ -243,76 +409,122 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
 <!-- ===================== 1. Designentwurf ===================== -->
 <section aria-labelledby="h-design">
   <span class="eyebrow">Schritt 1</span>
-  <h2 id="h-design">Designentwurf: die vier Screens</h2>
-  <p class="lead">Weiche Pastellfarben, eine rundliche Comic-Elli mit Schleife und einer „1“ auf dem Kleidchen, Wimpelkette und Holzboden wie im Wohnzimmer. Der Spiel-Screen ist animiert, damit man das Wackeln sieht.</p>
+  <h2 id="h-design">Designentwurf: die fünf Screens</h2>
+  <p class="lead">Elli hat jetzt dunkelblonde Haare und ein Marienkäfer-Kleidchen. Im Spiel-Screen siehst du, wie sie wirklich läuft: Die Beine machen Schritte, Boden und Zimmer ziehen vorbei, Papa wartet schon am Rand.</p>
 
-  <div class="screens" tabindex="0" aria-label="Vier Handy-Screens, seitlich scrollbar">
+  <div class="screens" tabindex="0" aria-label="Fünf Handy-Screens, seitlich scrollbar">
     <div class="screens-row">
 
       <!-- Start -->
       <figure>
-        <div class="phone" role="img" aria-label="Startbildschirm mit Titel, Elli und Los-geht's-Knopf">
+        <div class="phone" role="img" aria-label="Startbildschirm mit Titel, Elli, Steuerungswahl und Los-geht's-Knopf">
           <svg class="bunting" aria-hidden="true"><use href="#bunting"/></svg>
           <div class="floor"></div>
           <div class="abs center title-big">Elli<span>lernt laufen</span></div>
-          <div class="abs center sub">Hilf Elli bei ihren ersten Schritten. Bloß nicht umplumpsen!</div>
-          <svg class="abs bob" style="right:22px;top:200px;width:34px;color:var(--g-butter)" aria-hidden="true"><use href="#balloon"/></svg>
-          <svg class="abs bob" style="left:20px;top:214px;width:28px;color:var(--g-sky);animation-delay:-1.2s" aria-hidden="true"><use href="#balloon"/></svg>
-          <svg class="abs" style="left:80px;top:220px;width:80px" aria-hidden="true"><use href="#elli"/></svg>
-          <div class="abs center" style="bottom:66px;display:flex;flex-direction:column;gap:10px">
+          <div class="abs center sub">Bring Elli zu Mama, Papa, Ruby und Trude. Bloß nicht umplumpsen!</div>
+          <svg class="abs bob" style="right:22px;top:196px;width:30px;color:var(--g-butter)" aria-hidden="true"><use href="#balloon"/></svg>
+          <svg class="abs bob" style="left:22px;top:214px;width:30px;animation-delay:-1.2s" viewBox="0 0 40 40" aria-hidden="true"><use href="#ladybug"/></svg>
+          <svg class="abs" style="left:88px;top:196px;width:62px" aria-hidden="true"><use href="#elli"/></svg>
+          <svg class="abs" style="left:142px;top:252px;width:30px" viewBox="0 0 40 40" aria-hidden="true"><use href="#giraffe"/></svg>
+          <div class="abs center" style="bottom:42px;display:flex;flex-direction:column;gap:9px">
+            <div class="seg"><span class="on">Tippen</span><span>Neigen</span></div>
             <span class="btn">Los geht's!</span>
             <span class="btn alt">Bestenliste</span>
           </div>
           <div class="abs center party">13.11. · Elli wird 1</div>
         </div>
-        <figcaption><b>Start</b>Erklärt in einem Satz, worum es geht. Großer Knopf, damit auch Oma sofort loslegt.</figcaption>
+        <figcaption><b>Start</b>Ein Satz zum Ziel des Spiels und ein großer Knopf. Darüber wählst du die Steuerung: Tippen (Standard) oder Handy neigen.</figcaption>
       </figure>
 
       <!-- Spiel -->
       <figure>
-        <div class="phone" role="img" aria-label="Spielbildschirm: Elli wackelt, oben Schrittzähler und Wackel-Meter, unten zwei Tippflächen">
-          <svg class="bunting" style="top:104px;opacity:.7" aria-hidden="true"><use href="#bunting"/></svg>
-          <div class="floor"></div>
-          <div class="abs hud">
-            <div class="score"><b>37</b><small>Schritte</small></div>
-            <div class="score" style="text-align:right"><b style="font-size:1.05rem">112</b><small>Rekord</small></div>
+        <div class="phone" role="img" aria-label="Spielbildschirm: Elli läuft mit Schritten nach rechts, der Boden scrollt, Papa wartet am rechten Rand">
+          <div class="floor scroll"></div>
+          <div class="abs deco" aria-hidden="true">
+            <svg style="left:150px;bottom:0;width:44px" viewBox="0 0 50 90"><use href="#plant"/></svg>
+            <svg style="left:206px;bottom:-14px;width:26px" viewBox="0 0 40 40"><use href="#tomato"/></svg>
+            <svg style="left:92px;bottom:96px;width:26px" viewBox="0 0 40 40"><use href="#ladybug"/></svg>
+            <svg style="left:390px;bottom:0;width:44px" viewBox="0 0 50 90"><use href="#plant"/></svg>
+            <svg style="left:446px;bottom:-14px;width:26px" viewBox="0 0 40 40"><use href="#tomato"/></svg>
+            <svg style="left:332px;bottom:96px;width:26px" viewBox="0 0 40 40"><use href="#ladybug"/></svg>
           </div>
+          <svg class="abs goal-person" viewBox="0 0 100 190" aria-hidden="true"><use href="#papa-full"/></svg>
+          <div class="abs hud">
+            <div class="score"><b>248</b><span class="mult">x2</span><small>Punkte</small></div>
+            <div class="score" style="text-align:right"><b style="font-size:1.05rem">1.120</b><small>Rekord</small></div>
+          </div>
+          <div class="abs goals" aria-hidden="true">
+            <svg class="av done" viewBox="0 0 60 60"><use href="#av-mama"/></svg><span class="bar half"></span>
+            <svg class="av now" viewBox="0 0 60 60"><use href="#av-papa"/></svg><span class="bar"></span>
+            <svg class="av" viewBox="0 0 60 60"><use href="#av-ruby"/></svg><span class="bar"></span>
+            <svg class="av" viewBox="0 0 60 60"><use href="#av-trude"/></svg>
+          </div>
+          <div class="abs center goal-label">Zu Papa · noch 14 Schritte</div>
           <div class="abs meter"><div class="needle"></div></div>
-          <div class="abs center meter-label">Wackel-Meter</div>
-          <div class="abs bubble">Huch, Bauklotz!</div>
-          <svg class="abs bob" style="right:34px;top:190px;width:30px;color:var(--g-pink)" aria-hidden="true"><use href="#balloon"/></svg>
-          <!-- Bauklötze E L L I -->
-          <svg class="abs" style="right:16px;bottom:27%;width:66px" viewBox="0 0 66 44" aria-hidden="true">
-            <rect x="0" y="22" width="22" height="22" rx="4" fill="var(--g-sky)"/><text x="11" y="39" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">E</text>
-            <rect x="22" y="22" width="22" height="22" rx="4" fill="var(--g-butter)"/><text x="33" y="39" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">L</text>
-            <rect x="44" y="22" width="22" height="22" rx="4" fill="var(--g-mint)"/><text x="55" y="39" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">L</text>
-            <rect x="22" y="0" width="22" height="22" rx="4" fill="var(--g-pink)"/><text x="33" y="17" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">I</text>
-          </svg>
-          <svg class="abs elli-walk" aria-hidden="true"><use href="#elli"/></svg>
+          <div class="abs bubble">Marienkäfer! Nach vorne lehnen</div>
+          <div class="abs pop" style="left:72px;top:210px">+3</div>
+          <div class="abs elli-walk" aria-hidden="true">
+            <svg viewBox="0 0 100 140" style="display:block;width:100%;overflow:visible">
+              <ellipse cx="50" cy="134" rx="22" ry="5" fill="#000" opacity=".10"/>
+              <g class="bodybob">
+                <g class="leg-r"><rect x="53" y="100" width="10" height="28" rx="5" fill="var(--g-skin)"/><ellipse cx="59" cy="129" rx="8" ry="5" fill="var(--g-pink)"/></g>
+                <g class="leg-l"><rect x="37" y="100" width="10" height="28" rx="5" fill="var(--g-skin)"/><ellipse cx="41" cy="129" rx="8" ry="5" fill="var(--g-pink)"/></g>
+                <g class="arm-l"><path d="M22 66 L10 52" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/></g>
+                <g class="arm-r"><path d="M78 66 L90 52" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/></g>
+                <use href="#elli-dress"/>
+                <use href="#elli-head"/>
+              </g>
+            </svg>
+          </div>
           <div class="abs tapzones">
-            <div class="tap"><svg viewBox="0 0 16 16"><path d="M10 3 L5 8 L10 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>links</div>
-            <div class="tap hot">rechts<svg viewBox="0 0 16 16"><path d="M6 3 L11 8 L6 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="tap"><svg viewBox="0 0 16 16"><path d="M10 3 L5 8 L10 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>zurück</div>
+            <div class="tap hot">nach vorne<svg viewBox="0 0 16 16"><path d="M6 3 L11 8 L6 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           </div>
         </div>
-        <figcaption><b>Spiel</b>Elli läuft von allein. Kippt sie, tippst du auf die Seite, zu der sie kippt, und reichst ihr die Hand. Der Wackel-Meter zeigt, wie knapp es ist.</figcaption>
+        <figcaption><b>Spiel</b>Elli läuft richtig: Beine, Arme und Körper bewegen sich, das Zimmer scrollt. Oben siehst du die Zielreihe Mama → Papa → Ruby → Trude, den Wackel-Meter und den Multiplikator.</figcaption>
+      </figure>
+
+      <!-- Ziel erreicht -->
+      <figure>
+        <div class="phone" role="img" aria-label="Zwischenbildschirm: Elli hat Mama erreicht, Bonuspunkte, nächstes Ziel Papa">
+          <svg class="bunting" aria-hidden="true"><use href="#bunting"/></svg>
+          <div class="floor"></div>
+          <div class="abs center reach-title">Elli hat <span>Mama</span> erreicht!</div>
+          <svg class="abs hearts" viewBox="0 0 226 150" aria-hidden="true">
+            <use href="#heart" x="22" y="24" width="20" height="18"/><use href="#heart" x="184" y="12" width="24" height="22"/>
+            <use href="#heart" x="176" y="104" width="16" height="14"/><use href="#heart" x="36" y="110" width="14" height="13"/>
+          </svg>
+          <svg class="abs big-av" viewBox="0 0 60 60" aria-hidden="true"><use href="#av-mama"/></svg>
+          <div class="abs center bonus">+50 Ziel-Bonus<small>Runde 1 · Elli wird schneller</small></div>
+          <svg class="abs" style="left:90px;bottom:78px;width:58px" aria-hidden="true"><use href="#elli"/></svg>
+          <div class="abs next">
+            <svg class="av" viewBox="0 0 60 60" aria-hidden="true"><use href="#av-papa"/></svg>
+            <div>Weiter zu Papa<small>läuft automatisch weiter</small></div>
+          </div>
+        </div>
+        <figcaption><b>Ziel erreicht</b>Ein kurzer Jubel-Moment (ca. 1,5 Sekunden), dann geht es direkt weiter. Nach Trude beginnt Runde 2, schneller und wackliger.</figcaption>
       </figure>
 
       <!-- Plumps -->
       <figure>
-        <div class="phone" role="img" aria-label="Spielende: Elli sitzt, Text Plumps, Ergebnis 37 Schritte und Namensfeld">
+        <div class="phone" role="img" aria-label="Spielende: Elli sitzt, Text Plumps, Punkte-Aufschlüsselung und Namensfeld">
           <div class="floor"></div>
           <div class="abs overlay"></div>
           <div class="abs card">
             <span class="plumps">Plumps!</span>
-            <p class="result">Elli ist gelaufen:<b>37 Schritte</b></p>
-            <span class="newrec">Platz 3 in der Bestenliste</span>
+            <p class="result">Deine Punkte<b>1.284</b></p>
+            <div class="breakdown">
+              <span>Schritte</span><span>412</span>
+              <span>Tomaten &amp; Käfer</span><span>278</span>
+              <span>Ziele (bis Ruby, R2)</span><span>350</span>
+              <span>Multiplikator</span><span>244</span>
+            </div>
             <div class="field">Dein Name <span class="caret"></span></div>
             <span class="btn" style="width:100%;font-size:.95rem">Eintragen</span>
-            <span class="btn alt" style="width:100%">Nochmal</span>
           </div>
           <svg class="abs burst" viewBox="0 0 150 110" aria-hidden="true"><use href="#elli-sit"/></svg>
         </div>
-        <figcaption><b>Plumps!</b>Elli landet sanft auf der Windel. Name eintippen, fertig. Der Name bleibt für die nächste Runde gespeichert.</figcaption>
+        <figcaption><b>Plumps!</b>Elli landet sanft auf der Windel. Die Aufschlüsselung zeigt, wo noch Punkte drin waren, und macht Lust auf noch eine Runde.</figcaption>
       </figure>
 
       <!-- Bestenliste -->
@@ -323,15 +535,15 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
           <div class="abs center board-title">Bestenliste</div>
           <div class="abs center sample">Beispieldaten</div>
           <div class="abs board">
-            <div class="row r1"><span class="rank">1</span><span>Opa</span><span class="pts">112</span></div>
-            <div class="row r2"><span class="rank">2</span><span>Tante</span><span class="pts">86</span></div>
-            <div class="row r3 me"><span class="rank">3</span><span>Mama</span><span class="pts">37</span></div>
-            <div class="row"><span class="rank">4</span><span>Oma</span><span class="pts">29</span></div>
-            <div class="row"><span class="rank">5</span><span>Papa</span><span class="pts">18</span></div>
+            <div class="row r1"><span class="rank">1</span><span>Onkel<small>bis Papa, Runde 3</small></span><span class="pts">3.871</span></div>
+            <div class="row r2"><span class="rank">2</span><span>Opa<small>bis Trude, Runde 1</small></span><span class="pts">1.420</span></div>
+            <div class="row r3 me"><span class="rank">3</span><span>Mama<small>bis Ruby, Runde 2</small></span><span class="pts">1.284</span></div>
+            <div class="row"><span class="rank">4</span><span>Oma<small>bis Papa, Runde 1</small></span><span class="pts">396</span></div>
+            <div class="row"><span class="rank">5</span><span>Tante<small>bis Mama, Runde 1</small></span><span class="pts">171</span></div>
           </div>
-          <div class="abs center" style="bottom:52px"><span class="btn">Nochmal spielen</span></div>
+          <div class="abs center" style="bottom:46px"><span class="btn">Nochmal spielen</span></div>
         </div>
-        <figcaption><b>Bestenliste</b>Für alle gleich, live aus der Google Tabelle. Pro Name zählt der beste Versuch, die eigene Zeile ist markiert.</figcaption>
+        <figcaption><b>Bestenliste</b>Live aus der Google Tabelle. Pro Name zählt der beste Versuch, darunter steht, wie weit man gekommen ist.</figcaption>
       </figure>
 
     </div>
@@ -339,19 +551,26 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
 
   <div class="grid">
     <div class="box">
-      <h3>Farben</h3>
-      <div class="palette">
-        <span class="sw"><i style="background:var(--g-pink)"></i>Schleifen-Rosa</span>
-        <span class="sw"><i style="background:var(--g-mint)"></i>Kleidchen-Mint</span>
-        <span class="sw"><i style="background:var(--g-butter)"></i>Butterkeks</span>
-        <span class="sw"><i style="background:var(--g-sky)"></i>Ballon-Blau</span>
-        <span class="sw"><i style="background:var(--g-floor)"></i>Holzboden</span>
+      <h3>Figuren <span class="new">neu</span></h3>
+      <div class="cast">
+        <div><svg viewBox="0 0 100 140" style="padding:4px 8px"><use href="#elli"/></svg>Elli</div>
+        <div><svg viewBox="0 0 60 60"><use href="#av-mama"/></svg>Mama</div>
+        <div><svg viewBox="0 0 60 60"><use href="#av-papa"/></svg>Papa</div>
+        <div><svg viewBox="0 0 60 60"><use href="#av-ruby"/></svg>Ruby</div>
+        <div><svg viewBox="0 0 60 60"><use href="#av-trude"/></svg>Trude</div>
       </div>
+      <p style="color:var(--muted);font-size:.88rem">Aussehen von Mama, Papa und Ruby ist ein Platzhalter. Trude ist ein heller Mopsmischling mit dunkler Schnauze.</p>
     </div>
     <div class="box">
-      <h3>Schriften</h3>
-      <div class="fonts"><span class="f1">Fredoka</span><span>für Titel &amp; Zahlen</span></div>
-      <div class="fonts"><span class="f2">Nunito</span><span>für kurze Texte</span></div>
+      <h3>Farben</h3>
+      <div class="palette">
+        <span class="sw"><i style="background:var(--g-lady)"></i>Marienkäfer</span>
+        <span class="sw"><i style="background:var(--g-pink)"></i>Schleife</span>
+        <span class="sw"><i style="background:var(--g-butter)"></i>Giraffe</span>
+        <span class="sw"><i style="background:var(--g-mint)"></i>Blatt</span>
+        <span class="sw"><i style="background:var(--g-floor)"></i>Holzboden</span>
+      </div>
+      <div class="fonts"><span class="f1">Fredoka</span><span>Titel &amp; Zahlen</span><span class="f2">Nunito</span><span>Texte</span></div>
     </div>
   </div>
 </section>
@@ -362,69 +581,82 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
   <h2 id="h-mech">So spielt es sich</h2>
   <div class="grid">
     <div class="box">
-      <h3>Grundprinzip</h3>
-      <p>Elli tapst automatisch nach rechts. Ihr Körper verhält sich wie ein umgedrehtes Pendel: Je schiefer sie steht, desto schneller kippt sie weiter. Ein Tipp gibt einen kleinen Schubs zurück zur Mitte. Über 45° heißt es <b>Plumps!</b></p>
+      <h3>Steuerung</h3>
+      <p>Seitenansicht: Elli läuft nach rechts. Ihr Körper verhält sich wie ein umgedrehtes Pendel. <b>Tippen rechts</b> schiebt sie nach vorne, <b>tippen links</b> zieht sie zurück. Über 45° Neigung heißt es <b>Plumps!</b></p>
+      <p>Wer wild drauflos tippt, übersteuert und kippt zur anderen Seite. Ruhiges, gezieltes Tippen gewinnt.</p>
     </div>
     <div class="box">
-      <h3>Punkte</h3>
+      <h3>Echte Fortbewegung <span class="new">neu</span></h3>
       <ul>
-        <li>1 Punkt pro Schritt</li>
-        <li>Luftballon einsammeln: +5</li>
-        <li>Keks: Elli wackelt 3 Sekunden ruhiger</li>
+        <li>Animierter Laufzyklus: Beine abwechselnd, Arme rudern, Körper wippt</li>
+        <li>Die Kamera folgt Elli, Boden, Möbel und Wimpel ziehen vorbei (Parallax)</li>
+        <li>Lehnt Elli nach vorne, tapst sie schneller. Lehnt sie zurück, wird sie langsamer</li>
+        <li>Das Ziel taucht am rechten Rand auf und streckt die Arme aus</li>
       </ul>
     </div>
     <div class="box">
-      <h3>Es wird schwerer</h3>
+      <h3>Ziele <span class="new">neu</span></h3>
       <ul>
-        <li>Elli wird mit der Zeit schneller und wackliger</li>
-        <li>Bauklötze und Teppichkanten geben einen Stolper-Stoß</li>
-        <li>Die Katze huscht vorbei und lenkt ab</li>
+        <li>Runde 1: Mama → Papa → Ruby → Trude</li>
+        <li>Jedes Ziel: kurzer Jubel, Bonus, weiter geht's</li>
+        <li>Nach Trude startet Runde 2 mit längeren Wegen, mehr Tempo und mehr Wackeln. Und so weiter, ohne Ende</li>
       </ul>
     </div>
     <div class="box">
-      <h3>Für Party-Gäste gedacht</h3>
+      <h3>Störungen</h3>
       <ul>
-        <li>Eine Runde dauert 30–90 Sekunden</li>
-        <li>Nur zwei Tippflächen, keine Anleitung nötig</li>
-        <li>Optional: Handy neigen statt tippen</li>
+        <li>Bauklötze und Teppichkanten: Stolper-Stoß nach vorne</li>
+        <li><b>Trude flitzt vorbei</b>: Elli erschrickt und wackelt kräftig <span class="new">neu</span></li>
+        <li>Ruby winkt aus dem Hintergrund: Elli dreht sich kurz um und lehnt nach hinten</li>
       </ul>
+    </div>
+    <div class="box">
+      <h3>Zusatzmodus „Neigen“ <span class="new">neu</span></h3>
+      <p>Statt zu tippen, neigt man das Handy. Auf dem iPhone fragt das Spiel beim Start einmal nach der Erlaubnis. Klappt das nicht, schaltet es automatisch auf Tippen um.</p>
     </div>
   </div>
 </section>
 
-<!-- ===================== 3. Recherche ===================== -->
-<section aria-labelledby="h-ideas">
-  <span class="eyebrow">Schritt 3</span>
-  <h2 id="h-ideas">Recherche: Varianten für das Balance-Spiel</h2>
-  <p class="lead">Bekannte Wackel-Lauf-Spiele wie QWOP oder Daddy Long Legs zeigen: Eine einzige, einfache Eingabe reicht, und das Hinfallen mit sofortigem Neustart macht den Reiz aus. Daraus ergeben sich drei Varianten.</p>
+<!-- ===================== 3. Punkte ===================== -->
+<section aria-labelledby="h-points">
+  <span class="eyebrow">Schritt 3 · neu</span>
+  <h2 id="h-points">Punkte ohne Obergrenze</h2>
+  <p class="lead">Es gibt keinen optimalen Lauf zum Auswendiglernen. Jeder Lauf ist zufällig aufgebaut, die Punkte hängen an Mut und Geschick, und das Spiel wird endlos schwerer. So lohnt es sich für die Zocker, es immer wieder zu versuchen.</p>
   <div class="grid">
-    <div class="box pick">
-      <span class="tag pick">Empfehlung</span>
-      <h3>A · Hand reichen</h3>
-      <p>Elli läuft allein, du tippst links oder rechts, um sie aufzufangen. Sofort verständlich, funktioniert auf jedem Handy.</p>
+    <div class="box">
+      <h3>Punktequellen</h3>
+      <div class="items">
+        <div class="item"><svg viewBox="0 0 100 140" aria-hidden="true"><use href="#elli"/></svg><div><b>Schritt</b><p>Schneller laufen bei Vorlage = mehr Schritte pro Sekunde</p></div><span class="pts">1</span></div>
+        <div class="item"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#tomato"/></svg><div><b>Tomate</b><p>Liegt auf dem Weg, wird im Vorbeigehen aufgesammelt</p></div><span class="pts">3</span></div>
+        <div class="item"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#ladybug"/></svg><div><b>Marienkäfer</b><p>Fliegt in Kopfhöhe. Nur fangbar, wenn Elli deutlich nach vorne lehnt. Riskant!</p></div><span class="pts">15</span></div>
+        <div class="item"><svg viewBox="0 0 40 40" aria-hidden="true"><use href="#giraffe"/></svg><div><b>Kuschel-Giraffe</b><p>Selten. Elli drückt sie an sich und wackelt 4 Sekunden lang ruhiger</p></div><span class="pts">–</span></div>
+        <div class="item"><svg viewBox="0 0 60 60" style="border-radius:50%" aria-hidden="true"><use href="#av-mama"/></svg><div><b>Ziel erreicht</b><p>Bonus steigt mit jeder Runde</p></div><span class="pts">50 × Runde</span></div>
+      </div>
     </div>
     <div class="box">
-      <span class="tag">Alternative</span>
-      <h3>B · Schritt für Schritt</h3>
-      <p>Abwechselnd links und rechts tippen setzt jeweils einen Fuß. Wer aus dem Takt kommt, gerät ins Wanken. Lustiger, aber schwerer für Ältere.</p>
-    </div>
-    <div class="box">
-      <span class="tag">Zusatzmodus</span>
-      <h3>C · Handy neigen</h3>
-      <p>Balance über den Lagesensor. Auf dem iPhone muss man dafür erst eine Erlaubnis antippen, und das klappt nicht immer zuverlässig. Daher nur als Extra.</p>
+      <h3>Multiplikator „Ruhige Hand“</h3>
+      <p>Alle Punkte zählen mal ×1 bis ×5. Er steigt alle 10 Sekunden, solange Elli nicht in den roten Bereich gerät, und fällt bei jedem Beinahe-Sturz auf ×1 zurück.</p>
+      <h3 style="margin-top:8px">Warum es kein Maximum gibt</h3>
+      <ul>
+        <li>Endlos: Nach Trude folgt die nächste Runde, ohne Ende</li>
+        <li>Die Schwierigkeit steigt ohne Deckel, irgendwann plumpst jede Elli</li>
+        <li>Zufällig: Tomaten, Käfer, Giraffe, Klötze und Trude kommen jedes Mal an anderen Stellen</li>
+        <li>Risiko gegen Sicherheit: Vorlage bringt Tempo und Käfer, aber auch Sturzgefahr</li>
+      </ul>
     </div>
   </div>
   <div class="table-wrap">
     <table>
-      <thead><tr><th>Idee</th><th>Verständlich</th><th>Spaß</th><th>Aufwand</th><th>Bemerkung</th></tr></thead>
+      <thead><tr><th>Runde</th><th>Weg pro Ziel</th><th>Grund-Tempo</th><th>Wackeln</th><th>Ziel-Bonus</th></tr></thead>
       <tbody>
-        <tr><td><b>A · Hand reichen</b></td><td class="dots">●●●</td><td class="dots">●●○</td><td class="dots">●○○</td><td>Bis zur Feier gut schaffbar</td></tr>
-        <tr><td>B · Schritt für Schritt</td><td class="dots">●●○</td><td class="dots">●●●</td><td class="dots">●●○</td><td>Braucht mehr Feintuning</td></tr>
-        <tr><td>C · Handy neigen</td><td class="dots">●●○</td><td class="dots">●●●</td><td class="dots">●●○</td><td>iPhone-Erlaubnis nötig, nur per HTTPS</td></tr>
-        <tr><td>Endlos-Läufer (springen)</td><td class="dots">●●●</td><td class="dots">●●○</td><td class="dots">●○○</td><td>Kein Balance-Thema, verworfen</td></tr>
+        <tr><td>1</td><td class="num">30 Schritte</td><td class="num">100 %</td><td class="num">sanft</td><td class="num">50</td></tr>
+        <tr><td>2</td><td class="num">40 Schritte</td><td class="num">115 %</td><td class="num">spürbar</td><td class="num">100</td></tr>
+        <tr><td>3</td><td class="num">50 Schritte</td><td class="num">130 %</td><td class="num">frech</td><td class="num">150</td></tr>
+        <tr><td>n</td><td class="num">+10 je Runde</td><td class="num">+15 % je Runde</td><td class="num">wächst weiter</td><td class="num">50 × n</td></tr>
       </tbody>
     </table>
   </div>
+  <p style="color:var(--muted);font-size:.9rem;max-width:72ch">Die Werte sind Startwerte. Nach dem ersten Test stimme ich sie so ab, dass Oma Runde 1 schafft und ein geübter Spieler in Runde 3 bis 4 kommt.</p>
 </section>
 
 <!-- ===================== 4. Technik ===================== -->
@@ -438,13 +670,13 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
     <div class="arrow" aria-hidden="true">→</div>
     <div class="node"><b>Apps Script</b><span>Kleines Google-Skript als Web-App. Liest die Top 10 und nimmt neue Punkte an.</span></div>
     <div class="arrow" aria-hidden="true">→</div>
-    <div class="node"><b>Google Tabelle</b><span>Spalten: Zeit, Name, Schritte. Du siehst jeden Eintrag live.</span></div>
+    <div class="node"><b>Google Tabelle</b><span>Spalten: Zeit, Name, Punkte, Ziel, Runde, Dauer, Steuerung.</span></div>
   </div>
   <div class="prose">
     <ul>
-      <li>Das Spiel wird mit purem HTML, Canvas und JavaScript gebaut. Keine App, kein Build-Schritt, lädt auch im schwachen WLAN schnell.</li>
+      <li>Das Spiel wird mit purem HTML, Canvas und JavaScript gebaut, ohne Ton. Keine App, kein Build-Schritt, lädt auch im schwachen WLAN schnell.</li>
       <li>Die Punkte werden als einfacher Text gesendet. So umgeht man die bekannten CORS-Probleme mit Apps Script.</li>
-      <li>Das Skript prüft Name (max. 16 Zeichen) und Punktzahl auf Plausibilität. Für eine Familienfeier reicht das als Schummelschutz.</li>
+      <li>Schummelschutz ohne festes Punktelimit: Das Skript prüft, ob Punkte und Spieldauer zusammenpassen (maximal möglicher Punkte-pro-Sekunde-Wert). Der Name darf höchstens 16 Zeichen haben.</li>
       <li>Fällt das Internet aus, läuft das Spiel trotzdem. Die Punkte werden später nachgesendet.</li>
     </ul>
   </div>
@@ -456,20 +688,20 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
   <h2 id="h-plan">Zeitplan bis zur Feier</h2>
   <div class="timeline">
     <div class="step done">
-      <span class="when">Mi 11.11. · heute</span>
+      <span class="when">Mi 11.11.</span>
       <h3>Designentwurf &amp; Plan</h3>
-      <p>Dieses Dokument. Du gibst Feedback zu Look und Variante.</p>
+      <p>Version 2 mit deinen Wünschen: Ziele, Elli-Aussehen, Trude, Fortbewegung, Punkte ohne Limit, Neigen-Modus, ohne Ton.</p>
     </div>
     <div class="step">
       <span class="when">Mi 11.11. abends</span>
       <h3>Spiel-Prototyp</h3>
-      <ul><li>Wackel-Physik, Tippsteuerung, Schrittzähler, Plumps</li><li>Elli, Hintergrund und Hindernisse als Grafik</li></ul>
+      <ul><li>Wackel-Physik, Tippsteuerung, Laufzyklus und scrollende Welt</li><li>Ziele Mama → Papa → Ruby → Trude, Runden-System</li><li>Punkte, Multiplikator, Plumps-Screen</li></ul>
       <span class="who">Claude baut, du testest auf dem Handy</span>
     </div>
     <div class="step">
       <span class="when">Do 12.11.</span>
-      <h3>Bestenliste &amp; Online-Stellung</h3>
-      <ul><li>Google Tabelle anlegen, Apps Script einfügen, als Web-App veröffentlichen (ca. 10 Minuten, mit Schritt-für-Schritt-Anleitung)</li><li>GitHub Pages einschalten, QR-Code erzeugen</li><li>Feinschliff: Sounds, Ballons, Kekse, Schwierigkeit</li></ul>
+      <h3>Bestenliste, Neigen-Modus &amp; Online-Stellung</h3>
+      <ul><li>Google Tabelle anlegen, Apps Script einfügen, als Web-App veröffentlichen (ca. 10 Minuten, mit Anleitung)</li><li>GitHub Pages einschalten, QR-Code erzeugen</li><li>Neigen-Modus, Störungen, Feinschliff der Schwierigkeit</li></ul>
       <span class="who">Claude baut, du klickst die Google-Freigabe</span>
     </div>
     <div class="step">
@@ -487,14 +719,12 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-off
 
 <!-- ===================== 6. Fragen ===================== -->
 <section aria-labelledby="h-q">
-  <span class="eyebrow">Noch zu klären</span>
-  <h2 id="h-q">Fragen an dich</h2>
+  <span class="eyebrow">Noch zu klären (optional)</span>
+  <h2 id="h-q">Kleine Fragen zur Personalisierung</h2>
   <ol class="questions">
-    <li>Passt Variante A (Hand reichen), oder lieber B (Schritt für Schritt)?</li>
-    <li>Wie sieht Elli aus: Haarfarbe, Lieblingsfarbe, Kuscheltier? Dann passe ich die Figur an.</li>
-    <li>Soll Elli ein Ziel haben (z. B. zu Mama, Papa oder zur Torte laufen) oder endlos laufen?</li>
-    <li>Sound an oder aus als Standard? Bei einer Feier am Tisch eher leise.</li>
-    <li>Hast du ein Google-Konto für die Tabelle?</li>
+    <li>Haarfarbe von Mama, Papa und Ruby? Brille, Bart oder Zöpfe? Sonst bleiben die Platzhalter.</li>
+    <li>Trudes Fellfarbe: hell-beige mit dunkler Schnauze, wie im Entwurf, oder anders?</li>
+    <li>Gibt es einen Preis für Platz 1? Dann zeige ich ihn auf dem Startscreen an.</li>
   </ol>
 </section>
 
