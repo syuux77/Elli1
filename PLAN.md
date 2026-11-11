@@ -59,7 +59,7 @@ QR-Code → GitHub Pages (`https://syuux77.github.io/Elli1/`) → Google Apps Sc
 ## Stand
 - [x] Designentwurf & Plan
 - [x] Spiel (Physik, Laufzyklus, Ziele, Punkte, Neigen-Modus, Bestenliste, QR-Karte)
-- [ ] Google Tabelle + Apps Script einrichten (siehe SETUP.md)
+- [x] Google Tabelle + Apps Script eingerichtet
 - [ ] GitHub Pages einschalten
 - [ ] Generalprobe auf iPhone & Android
 
