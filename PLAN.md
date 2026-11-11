@@ -56,6 +56,13 @@ QR-Code → GitHub Pages (`https://syuux77.github.io/Elli1/`) → Google Apps Sc
 | Fr 13.11. | Generalprobe auf iPhone & Android, Testeinträge löschen, QR-Aufsteller drucken |
 | Sa 14.11. | Feier: spielen, Siegerehrung zum Kuchen |
 
+## Stand
+- [x] Designentwurf & Plan
+- [x] Spiel (Physik, Laufzyklus, Ziele, Punkte, Neigen-Modus, Bestenliste, QR-Karte)
+- [ ] Google Tabelle + Apps Script einrichten (siehe SETUP.md)
+- [ ] GitHub Pages einschalten
+- [ ] Generalprobe auf iPhone & Android
+
 ## Optionale Fragen
 1. Aussehen von Mama, Papa, Ruby (Haarfarbe, Brille, Zöpfe …)?
 2. Trudes Fellfarbe?
