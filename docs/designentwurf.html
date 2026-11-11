@@ -1,0 +1,514 @@
+<title>Elli lernt laufen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: Seite = ruhiges Plandokument; der Designentwurf sitzt oben als Reihe aus vier Handy-Screens. */
+:root{
+  /* Seiten-Tokens (hell) */
+  --bg:#FBF7FA; --surface:#FFFFFF; --fg:#3B2F45; --muted:#7A6C86; --line:#EADFEA;
+  --accent:#E8789A; --accent-ink:#B8466C; --mint:#9FDCC8; --butter:#FFE3A3; --sky:#BFD7F5;
+  /* Spiel-Tokens: feste Pastellwelt, in beiden Themes gleich */
+  --g-wall-top:#E6DDF7; --g-wall-bot:#FCE3EA; --g-floor:#F6D9B8; --g-floor-line:#EBC69F;
+  --g-ink:#4A3557; --g-pink:#F28DAE; --g-mint:#8ED5BF; --g-butter:#FFD98A; --g-sky:#A9CBF2;
+  --g-skin:#F7D4BF; --g-hair:#B98458; --g-white:#FFFFFF; --g-red:#F07A7A;
+  --display:"Fredoka","Baloo 2","Trebuchet MS",system-ui,sans-serif;
+  --body:"Nunito","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1E1824; --surface:#2A2232; --fg:#F3EAF4; --muted:#B7A8C2; --line:#3D3247;
+  --accent:#F293B1; --accent-ink:#F7B3C8; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1E1824; --surface:#2A2232; --fg:#F3EAF4; --muted:#B7A8C2; --line:#3D3247;
+  --accent:#F293B1; --accent-ink:#F7B3C8; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:32px 64px}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(2.2rem,6vw,3.4rem);font-weight:700}
+h2{font-size:1.75rem;font-weight:600}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+.eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)}
+.lead{font-size:1.1rem;color:var(--muted);max-width:62ch}
+section{display:flex;flex-direction:column;gap:20px}
+.prose{max-width:68ch;display:flex;flex-direction:column;gap:12px}
+.prose ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+
+header{display:flex;flex-direction:column;gap:14px}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:.85rem;font-weight:700}
+.chip i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+/* ---------- Handy-Screens ---------- */
+.screens{overflow-x:auto;padding:8px 4px 20px;margin:0 -4px}
+.screens-row{display:grid;grid-template-columns:repeat(4,240px);gap:24px;justify-content:start;width:max-content}
+@media (min-width:1080px){.screens-row{width:auto;justify-content:space-between}}
+figure{margin:0;display:flex;flex-direction:column;gap:10px}
+figcaption{font-size:.9rem;color:var(--muted)}
+figcaption b{color:var(--fg);font-family:var(--display);font-weight:600;font-size:1rem;display:block}
+.phone{position:relative;width:240px;aspect-ratio:9/19;border-radius:34px;border:7px solid #2F2536;overflow:hidden;
+  background:linear-gradient(var(--g-wall-top),var(--g-wall-bot) 72%);color:var(--g-ink);font-family:var(--display);
+  box-shadow:0 18px 40px -18px rgba(70,40,90,.45)}
+.phone .floor{position:absolute;left:0;right:0;bottom:0;height:27%;background:var(--g-floor);
+  background-image:repeating-linear-gradient(90deg,transparent 0 46px,var(--g-floor-line) 46px 48px)}
+.bunting{position:absolute;top:30px;left:-6px;right:-6px;height:40px}
+.abs{position:absolute}
+.center{left:0;right:0;text-align:center}
+
+/* Start */
+.title-big{top:70px;font-size:2.1rem;font-weight:700;line-height:1;letter-spacing:-.01em}
+.title-big span{display:block;color:var(--g-pink);font-size:2.5rem}
+.sub{top:162px;font-family:var(--body);font-weight:700;font-size:.82rem;padding:0 26px;color:#6E5A7C}
+.btn{display:block;margin:0 auto;border:0;border-radius:18px;font-family:var(--display);font-weight:600;font-size:1.05rem;padding:12px 22px;
+  background:var(--g-pink);color:var(--g-white);box-shadow:0 4px 0 #D4668B}
+.btn.alt{background:var(--g-white);color:var(--g-ink);box-shadow:0 3px 0 #E3D5E6;font-size:.9rem;padding:9px 18px}
+.party{bottom:12px;font-family:var(--body);font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#8F7A9C}
+
+/* Spiel */
+.hud{top:14px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:flex-start}
+.score{background:rgba(255,255,255,.8);border-radius:14px;padding:4px 10px;line-height:1.1}
+.score b{font-size:1.5rem;display:block}
+.score small{font-family:var(--body);font-weight:800;font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;color:#8F7A9C}
+.meter{top:72px;left:22px;right:22px;height:14px;border-radius:99px;
+  background:linear-gradient(90deg,var(--g-red) 0 12%,var(--g-butter) 12% 30%,var(--g-mint) 30% 70%,var(--g-butter) 70% 88%,var(--g-red) 88%);
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
+.needle{position:absolute;top:-5px;width:6px;height:24px;border-radius:3px;background:var(--g-ink);left:calc(64% - 3px);animation:needle 2.4s ease-in-out infinite}
+.meter-label{top:92px;font-family:var(--body);font-size:.66rem;font-weight:800;color:#8F7A9C;letter-spacing:.06em;text-transform:uppercase}
+.elli-walk{left:62px;bottom:21%;width:92px;transform-origin:50% 96%;animation:wobble 2.4s ease-in-out infinite}
+.tapzones{left:10px;right:10px;bottom:12px;display:flex;gap:8px}
+.tap{flex:1;height:58px;border-radius:16px;background:rgba(255,255,255,.55);border:2px dashed rgba(74,53,87,.25);
+  display:flex;align-items:center;justify-content:center;gap:6px;font-size:.78rem;font-weight:600}
+.tap.hot{background:rgba(255,255,255,.85);border-color:var(--g-pink);color:#C24F78}
+.tap svg{width:16px;height:16px}
+.bubble{top:120px;right:14px;background:var(--g-white);border-radius:14px 14px 4px 14px;padding:6px 10px;font-size:.78rem;font-weight:600;max-width:120px;line-height:1.2}
+
+/* Plumps */
+.overlay{inset:0;background:rgba(74,53,87,.28)}
+.card{left:14px;right:14px;top:118px;background:var(--g-white);border-radius:24px;padding:58px 16px 18px;text-align:center;display:flex;flex-direction:column;gap:10px}
+.burst{left:50%;top:44px;width:150px;margin-left:-75px}
+.plumps{font-size:1.9rem;font-weight:700;color:var(--g-pink);line-height:1}
+.result{font-family:var(--body);font-weight:700;font-size:.86rem;color:#6E5A7C}
+.result b{font-family:var(--display);font-size:1.6rem;color:var(--g-ink);display:block;line-height:1.2}
+.field{border:2px solid #E7DCEB;border-radius:14px;padding:9px 12px;font-family:var(--body);font-weight:700;font-size:.9rem;color:#A08FAC;text-align:left;display:flex;justify-content:space-between}
+.field .caret{width:2px;height:18px;background:var(--g-pink);animation:blink 1s steps(1) infinite}
+.newrec{display:inline-block;margin:0 auto;font-size:.7rem;font-weight:600;background:var(--g-butter);border-radius:99px;padding:2px 10px}
+
+/* Bestenliste */
+.board-title{top:58px;font-size:1.7rem;font-weight:700}
+.board{left:14px;right:14px;top:110px;display:flex;flex-direction:column;gap:6px}
+.row{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:8px;background:rgba(255,255,255,.75);border-radius:14px;padding:7px 10px;font-weight:600;font-size:.92rem}
+.row .rank{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;background:#EFE7F2}
+.row .pts{font-variant-numeric:tabular-nums}
+.row.r1{background:var(--g-white);box-shadow:0 3px 0 #EADCEA}.row.r1 .rank{background:#FFD45E}
+.row.r2 .rank{background:#DCDDE8}.row.r3 .rank{background:#F2C29B}
+.row.me{outline:2px solid var(--g-pink)}
+.sample{top:92px;font-family:var(--body);font-size:.62rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#A08FAC}
+
+@keyframes wobble{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(13deg)}}
+@keyframes needle{0%,100%{left:calc(41% - 3px)}50%{left:calc(70% - 3px)}}
+@keyframes blink{50%{opacity:0}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.bob{animation:bob 3s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.elli-walk,.needle,.bob,.field .caret{animation:none}.elli-walk{transform:rotate(12deg)}}
+
+/* Palette */
+.palette{display:flex;flex-wrap:wrap;gap:10px}
+.sw{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 12px 6px 6px}
+.sw i{width:28px;height:28px;border-radius:8px;display:block}
+.fonts{display:flex;flex-wrap:wrap;gap:24px;align-items:baseline;color:var(--muted);font-size:.9rem}
+.fonts .f1{font-family:var(--display);font-size:1.6rem;font-weight:700;color:var(--fg)}
+.fonts .f2{font-family:var(--body);font-size:1.1rem;font-weight:700;color:var(--fg)}
+
+/* Mechanik / Ideen */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.box p,.box li{font-size:.95rem}
+.box ul{margin:0;padding-left:1.1em}
+.tag{align-self:flex-start;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 10px;border-radius:99px;background:var(--line);color:var(--fg)}
+.tag.pick{background:var(--accent);color:#fff}
+.box.pick{border:2px solid var(--accent)}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.dots{white-space:nowrap;color:var(--accent-ink);letter-spacing:2px}
+
+/* Architektur */
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.node{flex:1 1 170px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.node b{font-family:var(--display);font-weight:600;font-size:1.02rem}
+.node span{font-size:.86rem;color:var(--muted)}
+.arrow{display:flex;align-items:center;color:var(--accent);font-weight:800;font-size:1.3rem}
+@media (max-width:640px){.flow{flex-direction:column}.arrow{justify-content:center;transform:rotate(90deg)}}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;background:var(--line);padding:1px 6px;border-radius:6px}
+
+/* Zeitplan */
+.timeline{display:flex;flex-direction:column;gap:0;border-left:3px solid var(--line);margin-left:8px}
+.step{position:relative;padding:0 0 22px 24px;display:flex;flex-direction:column;gap:4px;max-width:72ch}
+.step::before{content:"";position:absolute;left:-10px;top:5px;width:17px;height:17px;border-radius:50%;background:var(--surface);border:3px solid var(--accent)}
+.step.done::before{background:var(--accent)}
+.step .when{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink)}
+.step p,.step li{font-size:.95rem}
+.step ul{margin:0;padding-left:1.1em}
+.who{font-size:.8rem;font-weight:700;color:var(--muted)}
+
+.questions{counter-reset:q;display:flex;flex-direction:column;gap:10px;padding:0;margin:0;list-style:none;max-width:72ch}
+.questions li{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px 12px 52px;position:relative}
+.questions li::before{counter-increment:q;content:counter(q);position:absolute;left:14px;top:11px;width:26px;height:26px;border-radius:50%;background:var(--butter);color:#4A3557;display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.sources{font-size:.85rem;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.sources a{color:var(--accent-ink)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Elli stehend, Arme zum Balancieren ausgestreckt -->
+    <symbol id="elli" viewBox="0 0 100 140">
+      <ellipse cx="50" cy="134" rx="24" ry="5" fill="#000" opacity=".10"/>
+      <rect x="37" y="102" width="10" height="26" rx="5" fill="var(--g-skin)"/>
+      <rect x="53" y="102" width="10" height="26" rx="5" fill="var(--g-skin)"/>
+      <ellipse cx="41" cy="129" rx="8" ry="5" fill="var(--g-pink)"/>
+      <ellipse cx="59" cy="129" rx="8" ry="5" fill="var(--g-pink)"/>
+      <path d="M22 66 L10 52" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M78 66 L90 52" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M34 66 Q50 60 66 66 L76 104 Q50 112 24 104 Z" fill="var(--g-mint)"/>
+      <path d="M34 66 Q28 66 22 66" stroke="var(--g-mint)" stroke-width="10" stroke-linecap="round"/>
+      <path d="M66 66 Q72 66 78 66" stroke="var(--g-mint)" stroke-width="10" stroke-linecap="round"/>
+      <text x="50" y="94" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="20" fill="var(--g-white)">1</text>
+      <circle cx="50" cy="40" r="24" fill="var(--g-skin)"/>
+      <path d="M30 34 Q34 14 52 16 Q68 17 72 32 Q62 24 52 26 Q44 22 40 30 Q34 28 30 34 Z" fill="var(--g-hair)"/>
+      <path d="M50 17 q-6 -10 2 -12 q6 1 0 8" fill="none" stroke="var(--g-hair)" stroke-width="3" stroke-linecap="round"/>
+      <path d="M62 19 l10 -7 l2 12 z M62 19 l-2 -12 l12 4 z" fill="var(--g-pink)"/>
+      <circle cx="63" cy="18" r="3" fill="#E06F96"/>
+      <ellipse cx="42" cy="42" rx="2.6" ry="3.4" fill="var(--g-ink)"/>
+      <ellipse cx="58" cy="42" rx="2.6" ry="3.4" fill="var(--g-ink)"/>
+      <circle cx="36" cy="50" r="4" fill="var(--g-pink)" opacity=".45"/>
+      <circle cx="64" cy="50" r="4" fill="var(--g-pink)" opacity=".45"/>
+      <path d="M45 51 Q50 56 55 51" fill="none" stroke="var(--g-ink)" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <!-- Elli sitzend nach dem Plumps -->
+    <symbol id="elli-sit" viewBox="0 0 120 110">
+      <ellipse cx="60" cy="104" rx="40" ry="5" fill="#000" opacity=".10"/>
+      <rect x="22" y="88" width="34" height="11" rx="5.5" fill="var(--g-skin)"/>
+      <rect x="64" y="88" width="34" height="11" rx="5.5" fill="var(--g-skin)"/>
+      <ellipse cx="20" cy="92" rx="6" ry="8" fill="var(--g-pink)"/>
+      <ellipse cx="100" cy="92" rx="6" ry="8" fill="var(--g-pink)"/>
+      <path d="M42 56 Q60 50 78 56 L86 94 Q60 102 34 94 Z" fill="var(--g-mint)"/>
+      <path d="M40 60 L28 76" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
+      <path d="M80 60 L92 76" stroke="var(--g-skin)" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="60" cy="32" r="23" fill="var(--g-skin)"/>
+      <path d="M41 27 Q45 8 62 10 Q77 11 80 26 Q71 18 62 20 Q54 16 50 24 Q45 22 41 27 Z" fill="var(--g-hair)"/>
+      <path d="M71 13 l10 -7 l2 12 z M71 13 l-2 -12 l12 4 z" fill="var(--g-pink)"/>
+      <path d="M48 33 q4 -4 8 0" fill="none" stroke="var(--g-ink)" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M64 33 q4 -4 8 0" fill="none" stroke="var(--g-ink)" stroke-width="2.2" stroke-linecap="round"/>
+      <circle cx="46" cy="41" r="4" fill="var(--g-pink)" opacity=".5"/>
+      <circle cx="74" cy="41" r="4" fill="var(--g-pink)" opacity=".5"/>
+      <ellipse cx="60" cy="44" rx="4" ry="3.2" fill="var(--g-ink)"/>
+    </symbol>
+    <symbol id="balloon" viewBox="0 0 40 80">
+      <path d="M20 46 Q16 60 22 78" fill="none" stroke="#9C8AA8" stroke-width="1.5"/>
+      <ellipse cx="20" cy="22" rx="16" ry="20" fill="currentColor"/>
+      <path d="M17 42 l3 5 l3 -5 z" fill="currentColor"/>
+      <ellipse cx="14" cy="14" rx="4" ry="6" fill="#fff" opacity=".45"/>
+    </symbol>
+    <symbol id="bunting" viewBox="0 0 240 40" preserveAspectRatio="none">
+      <path d="M0 6 Q120 26 240 6" fill="none" stroke="#C9B6D6" stroke-width="1.5"/>
+      <path d="M10 8 l14 2 l-6 16 z" fill="var(--g-pink)"/><path d="M40 12 l14 1 l-7 16 z" fill="var(--g-butter)"/>
+      <path d="M70 14 l14 1 l-7 16 z" fill="var(--g-mint)"/><path d="M100 16 l14 0 l-7 16 z" fill="var(--g-sky)"/>
+      <path d="M130 16 l14 -1 l-7 16 z" fill="var(--g-pink)"/><path d="M160 14 l14 -1 l-7 16 z" fill="var(--g-butter)"/>
+      <path d="M190 12 l14 -2 l-7 16 z" fill="var(--g-mint)"/><path d="M218 9 l14 -2 l-7 16 z" fill="var(--g-sky)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Designentwurf &amp; Plan · Ellis 1. Geburtstag</span>
+  <h1>Elli lernt laufen</h1>
+  <p class="lead">Ein kleines Balance-Spiel fürs Handy. Die Gäste scannen einen QR-Code, helfen Elli bei ihren ersten Schritten und tragen sich in eine gemeinsame Bestenliste ein.</p>
+  <div class="meta">
+    <span class="chip"><i style="background:var(--g-pink)"></i>Familienfeier 14.11.</span>
+    <span class="chip"><i style="background:var(--g-mint)"></i>5–10 Gäste</span>
+    <span class="chip"><i style="background:var(--g-butter)"></i>Läuft im Browser, ohne App</span>
+    <span class="chip"><i style="background:var(--g-sky)"></i>Bestenliste in Google Tabelle</span>
+  </div>
+</header>
+
+<!-- ===================== 1. Designentwurf ===================== -->
+<section aria-labelledby="h-design">
+  <span class="eyebrow">Schritt 1</span>
+  <h2 id="h-design">Designentwurf: die vier Screens</h2>
+  <p class="lead">Weiche Pastellfarben, eine rundliche Comic-Elli mit Schleife und einer „1“ auf dem Kleidchen, Wimpelkette und Holzboden wie im Wohnzimmer. Der Spiel-Screen ist animiert, damit man das Wackeln sieht.</p>
+
+  <div class="screens" tabindex="0" aria-label="Vier Handy-Screens, seitlich scrollbar">
+    <div class="screens-row">
+
+      <!-- Start -->
+      <figure>
+        <div class="phone" role="img" aria-label="Startbildschirm mit Titel, Elli und Los-geht's-Knopf">
+          <svg class="bunting" aria-hidden="true"><use href="#bunting"/></svg>
+          <div class="floor"></div>
+          <div class="abs center title-big">Elli<span>lernt laufen</span></div>
+          <div class="abs center sub">Hilf Elli bei ihren ersten Schritten. Bloß nicht umplumpsen!</div>
+          <svg class="abs bob" style="right:22px;top:200px;width:34px;color:var(--g-butter)" aria-hidden="true"><use href="#balloon"/></svg>
+          <svg class="abs bob" style="left:20px;top:214px;width:28px;color:var(--g-sky);animation-delay:-1.2s" aria-hidden="true"><use href="#balloon"/></svg>
+          <svg class="abs" style="left:80px;top:220px;width:80px" aria-hidden="true"><use href="#elli"/></svg>
+          <div class="abs center" style="bottom:66px;display:flex;flex-direction:column;gap:10px">
+            <span class="btn">Los geht's!</span>
+            <span class="btn alt">Bestenliste</span>
+          </div>
+          <div class="abs center party">13.11. · Elli wird 1</div>
+        </div>
+        <figcaption><b>Start</b>Erklärt in einem Satz, worum es geht. Großer Knopf, damit auch Oma sofort loslegt.</figcaption>
+      </figure>
+
+      <!-- Spiel -->
+      <figure>
+        <div class="phone" role="img" aria-label="Spielbildschirm: Elli wackelt, oben Schrittzähler und Wackel-Meter, unten zwei Tippflächen">
+          <svg class="bunting" style="top:104px;opacity:.7" aria-hidden="true"><use href="#bunting"/></svg>
+          <div class="floor"></div>
+          <div class="abs hud">
+            <div class="score"><b>37</b><small>Schritte</small></div>
+            <div class="score" style="text-align:right"><b style="font-size:1.05rem">112</b><small>Rekord</small></div>
+          </div>
+          <div class="abs meter"><div class="needle"></div></div>
+          <div class="abs center meter-label">Wackel-Meter</div>
+          <div class="abs bubble">Huch, Bauklotz!</div>
+          <svg class="abs bob" style="right:34px;top:190px;width:30px;color:var(--g-pink)" aria-hidden="true"><use href="#balloon"/></svg>
+          <!-- Bauklötze E L L I -->
+          <svg class="abs" style="right:16px;bottom:27%;width:66px" viewBox="0 0 66 44" aria-hidden="true">
+            <rect x="0" y="22" width="22" height="22" rx="4" fill="var(--g-sky)"/><text x="11" y="39" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">E</text>
+            <rect x="22" y="22" width="22" height="22" rx="4" fill="var(--g-butter)"/><text x="33" y="39" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">L</text>
+            <rect x="44" y="22" width="22" height="22" rx="4" fill="var(--g-mint)"/><text x="55" y="39" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">L</text>
+            <rect x="22" y="0" width="22" height="22" rx="4" fill="var(--g-pink)"/><text x="33" y="17" text-anchor="middle" font-family="Fredoka" font-weight="700" font-size="15" fill="#fff">I</text>
+          </svg>
+          <svg class="abs elli-walk" aria-hidden="true"><use href="#elli"/></svg>
+          <div class="abs tapzones">
+            <div class="tap"><svg viewBox="0 0 16 16"><path d="M10 3 L5 8 L10 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>links</div>
+            <div class="tap hot">rechts<svg viewBox="0 0 16 16"><path d="M6 3 L11 8 L6 13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          </div>
+        </div>
+        <figcaption><b>Spiel</b>Elli läuft von allein. Kippt sie, tippst du auf die Seite, zu der sie kippt, und reichst ihr die Hand. Der Wackel-Meter zeigt, wie knapp es ist.</figcaption>
+      </figure>
+
+      <!-- Plumps -->
+      <figure>
+        <div class="phone" role="img" aria-label="Spielende: Elli sitzt, Text Plumps, Ergebnis 37 Schritte und Namensfeld">
+          <div class="floor"></div>
+          <div class="abs overlay"></div>
+          <div class="abs card">
+            <span class="plumps">Plumps!</span>
+            <p class="result">Elli ist gelaufen:<b>37 Schritte</b></p>
+            <span class="newrec">Platz 3 in der Bestenliste</span>
+            <div class="field">Dein Name <span class="caret"></span></div>
+            <span class="btn" style="width:100%;font-size:.95rem">Eintragen</span>
+            <span class="btn alt" style="width:100%">Nochmal</span>
+          </div>
+          <svg class="abs burst" viewBox="0 0 150 110" aria-hidden="true"><use href="#elli-sit"/></svg>
+        </div>
+        <figcaption><b>Plumps!</b>Elli landet sanft auf der Windel. Name eintippen, fertig. Der Name bleibt für die nächste Runde gespeichert.</figcaption>
+      </figure>
+
+      <!-- Bestenliste -->
+      <figure>
+        <div class="phone" role="img" aria-label="Bestenliste mit Platzierungen, mit Beispieldaten">
+          <svg class="bunting" aria-hidden="true"><use href="#bunting"/></svg>
+          <div class="floor"></div>
+          <div class="abs center board-title">Bestenliste</div>
+          <div class="abs center sample">Beispieldaten</div>
+          <div class="abs board">
+            <div class="row r1"><span class="rank">1</span><span>Opa</span><span class="pts">112</span></div>
+            <div class="row r2"><span class="rank">2</span><span>Tante</span><span class="pts">86</span></div>
+            <div class="row r3 me"><span class="rank">3</span><span>Mama</span><span class="pts">37</span></div>
+            <div class="row"><span class="rank">4</span><span>Oma</span><span class="pts">29</span></div>
+            <div class="row"><span class="rank">5</span><span>Papa</span><span class="pts">18</span></div>
+          </div>
+          <div class="abs center" style="bottom:52px"><span class="btn">Nochmal spielen</span></div>
+        </div>
+        <figcaption><b>Bestenliste</b>Für alle gleich, live aus der Google Tabelle. Pro Name zählt der beste Versuch, die eigene Zeile ist markiert.</figcaption>
+      </figure>
+
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="box">
+      <h3>Farben</h3>
+      <div class="palette">
+        <span class="sw"><i style="background:var(--g-pink)"></i>Schleifen-Rosa</span>
+        <span class="sw"><i style="background:var(--g-mint)"></i>Kleidchen-Mint</span>
+        <span class="sw"><i style="background:var(--g-butter)"></i>Butterkeks</span>
+        <span class="sw"><i style="background:var(--g-sky)"></i>Ballon-Blau</span>
+        <span class="sw"><i style="background:var(--g-floor)"></i>Holzboden</span>
+      </div>
+    </div>
+    <div class="box">
+      <h3>Schriften</h3>
+      <div class="fonts"><span class="f1">Fredoka</span><span>für Titel &amp; Zahlen</span></div>
+      <div class="fonts"><span class="f2">Nunito</span><span>für kurze Texte</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 2. Spielmechanik ===================== -->
+<section aria-labelledby="h-mech">
+  <span class="eyebrow">Schritt 2</span>
+  <h2 id="h-mech">So spielt es sich</h2>
+  <div class="grid">
+    <div class="box">
+      <h3>Grundprinzip</h3>
+      <p>Elli tapst automatisch nach rechts. Ihr Körper verhält sich wie ein umgedrehtes Pendel: Je schiefer sie steht, desto schneller kippt sie weiter. Ein Tipp gibt einen kleinen Schubs zurück zur Mitte. Über 45° heißt es <b>Plumps!</b></p>
+    </div>
+    <div class="box">
+      <h3>Punkte</h3>
+      <ul>
+        <li>1 Punkt pro Schritt</li>
+        <li>Luftballon einsammeln: +5</li>
+        <li>Keks: Elli wackelt 3 Sekunden ruhiger</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Es wird schwerer</h3>
+      <ul>
+        <li>Elli wird mit der Zeit schneller und wackliger</li>
+        <li>Bauklötze und Teppichkanten geben einen Stolper-Stoß</li>
+        <li>Die Katze huscht vorbei und lenkt ab</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Für Party-Gäste gedacht</h3>
+      <ul>
+        <li>Eine Runde dauert 30–90 Sekunden</li>
+        <li>Nur zwei Tippflächen, keine Anleitung nötig</li>
+        <li>Optional: Handy neigen statt tippen</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3. Recherche ===================== -->
+<section aria-labelledby="h-ideas">
+  <span class="eyebrow">Schritt 3</span>
+  <h2 id="h-ideas">Recherche: Varianten für das Balance-Spiel</h2>
+  <p class="lead">Bekannte Wackel-Lauf-Spiele wie QWOP oder Daddy Long Legs zeigen: Eine einzige, einfache Eingabe reicht, und das Hinfallen mit sofortigem Neustart macht den Reiz aus. Daraus ergeben sich drei Varianten.</p>
+  <div class="grid">
+    <div class="box pick">
+      <span class="tag pick">Empfehlung</span>
+      <h3>A · Hand reichen</h3>
+      <p>Elli läuft allein, du tippst links oder rechts, um sie aufzufangen. Sofort verständlich, funktioniert auf jedem Handy.</p>
+    </div>
+    <div class="box">
+      <span class="tag">Alternative</span>
+      <h3>B · Schritt für Schritt</h3>
+      <p>Abwechselnd links und rechts tippen setzt jeweils einen Fuß. Wer aus dem Takt kommt, gerät ins Wanken. Lustiger, aber schwerer für Ältere.</p>
+    </div>
+    <div class="box">
+      <span class="tag">Zusatzmodus</span>
+      <h3>C · Handy neigen</h3>
+      <p>Balance über den Lagesensor. Auf dem iPhone muss man dafür erst eine Erlaubnis antippen, und das klappt nicht immer zuverlässig. Daher nur als Extra.</p>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Idee</th><th>Verständlich</th><th>Spaß</th><th>Aufwand</th><th>Bemerkung</th></tr></thead>
+      <tbody>
+        <tr><td><b>A · Hand reichen</b></td><td class="dots">●●●</td><td class="dots">●●○</td><td class="dots">●○○</td><td>Bis zur Feier gut schaffbar</td></tr>
+        <tr><td>B · Schritt für Schritt</td><td class="dots">●●○</td><td class="dots">●●●</td><td class="dots">●●○</td><td>Braucht mehr Feintuning</td></tr>
+        <tr><td>C · Handy neigen</td><td class="dots">●●○</td><td class="dots">●●●</td><td class="dots">●●○</td><td>iPhone-Erlaubnis nötig, nur per HTTPS</td></tr>
+        <tr><td>Endlos-Läufer (springen)</td><td class="dots">●●●</td><td class="dots">●●○</td><td class="dots">●○○</td><td>Kein Balance-Thema, verworfen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== 4. Technik ===================== -->
+<section aria-labelledby="h-tech">
+  <span class="eyebrow">Schritt 4</span>
+  <h2 id="h-tech">Technik: kostenlos und ohne Login</h2>
+  <div class="flow">
+    <div class="node"><b>QR-Code</b><span>Auf einem Aufsteller am Tisch. Führt zur Spiel-Adresse.</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node"><b>GitHub Pages</b><span>Das Spiel als eine HTML-Datei aus diesem Repo. Adresse: <code>syuux77.github.io/Elli1</code></span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node"><b>Apps Script</b><span>Kleines Google-Skript als Web-App. Liest die Top 10 und nimmt neue Punkte an.</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="node"><b>Google Tabelle</b><span>Spalten: Zeit, Name, Schritte. Du siehst jeden Eintrag live.</span></div>
+  </div>
+  <div class="prose">
+    <ul>
+      <li>Das Spiel wird mit purem HTML, Canvas und JavaScript gebaut. Keine App, kein Build-Schritt, lädt auch im schwachen WLAN schnell.</li>
+      <li>Die Punkte werden als einfacher Text gesendet. So umgeht man die bekannten CORS-Probleme mit Apps Script.</li>
+      <li>Das Skript prüft Name (max. 16 Zeichen) und Punktzahl auf Plausibilität. Für eine Familienfeier reicht das als Schummelschutz.</li>
+      <li>Fällt das Internet aus, läuft das Spiel trotzdem. Die Punkte werden später nachgesendet.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===================== 5. Zeitplan ===================== -->
+<section aria-labelledby="h-plan">
+  <span class="eyebrow">Schritt 5</span>
+  <h2 id="h-plan">Zeitplan bis zur Feier</h2>
+  <div class="timeline">
+    <div class="step done">
+      <span class="when">Mi 11.11. · heute</span>
+      <h3>Designentwurf &amp; Plan</h3>
+      <p>Dieses Dokument. Du gibst Feedback zu Look und Variante.</p>
+    </div>
+    <div class="step">
+      <span class="when">Mi 11.11. abends</span>
+      <h3>Spiel-Prototyp</h3>
+      <ul><li>Wackel-Physik, Tippsteuerung, Schrittzähler, Plumps</li><li>Elli, Hintergrund und Hindernisse als Grafik</li></ul>
+      <span class="who">Claude baut, du testest auf dem Handy</span>
+    </div>
+    <div class="step">
+      <span class="when">Do 12.11.</span>
+      <h3>Bestenliste &amp; Online-Stellung</h3>
+      <ul><li>Google Tabelle anlegen, Apps Script einfügen, als Web-App veröffentlichen (ca. 10 Minuten, mit Schritt-für-Schritt-Anleitung)</li><li>GitHub Pages einschalten, QR-Code erzeugen</li><li>Feinschliff: Sounds, Ballons, Kekse, Schwierigkeit</li></ul>
+      <span class="who">Claude baut, du klickst die Google-Freigabe</span>
+    </div>
+    <div class="step">
+      <span class="when">Fr 13.11. · Ellis Geburtstag</span>
+      <h3>Generalprobe</h3>
+      <ul><li>Test auf iPhone und Android, mit 2–3 Personen gleichzeitig</li><li>Testeinträge aus der Tabelle löschen</li><li>QR-Aufsteller drucken</li></ul>
+    </div>
+    <div class="step">
+      <span class="when">Sa 14.11. · Feier</span>
+      <h3>Spielen &amp; Siegerehrung</h3>
+      <ul><li>QR-Code liegt aus, alle spielen zwischendurch</li><li>Zum Kuchen: Bestenliste zeigen, kleiner Preis für Platz 1</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6. Fragen ===================== -->
+<section aria-labelledby="h-q">
+  <span class="eyebrow">Noch zu klären</span>
+  <h2 id="h-q">Fragen an dich</h2>
+  <ol class="questions">
+    <li>Passt Variante A (Hand reichen), oder lieber B (Schritt für Schritt)?</li>
+    <li>Wie sieht Elli aus: Haarfarbe, Lieblingsfarbe, Kuscheltier? Dann passe ich die Figur an.</li>
+    <li>Soll Elli ein Ziel haben (z. B. zu Mama, Papa oder zur Torte laufen) oder endlos laufen?</li>
+    <li>Sound an oder aus als Standard? Bei einer Feier am Tisch eher leise.</li>
+    <li>Hast du ein Google-Konto für die Tabelle?</li>
+  </ol>
+</section>
+
+<section aria-labelledby="h-src">
+  <h3 id="h-src">Quellen der Recherche</h3>
+  <div class="sources">
+    <a href="https://gaslamp.readthedocs.io/en/latest/guides/web-api/" target="_blank" rel="noopener">Apps Script als Web-API (doGet/doPost)</a>
+    <a href="https://mser521.github.io/fall2025/resources/data-spreadsheet-database" target="_blank" rel="noopener">Google Sheets als Datenbank für Webseiten</a>
+    <a href="https://zenn.dev/luth/articles/node-fetch-gas?locale=en" target="_blank" rel="noopener">CORS-Workaround mit Formular-/Text-Body</a>
+    <a href="https://blog.openreplay.com/understanding-device-orientation-api/" target="_blank" rel="noopener">Device Orientation API</a>
+    <a href="https://forum.defold.com/t/how-to-force-safari-browser-to-allow-deviceorientation-permission-solved/75641" target="_blank" rel="noopener">iOS-Erlaubnis für Lagesensor</a>
+    <a href="https://www.pocketgamer.com/articles/061520/r/" target="_blank" rel="noopener">Daddy Long Legs: Ein-Tasten-Laufspiel</a>
+    <a href="https://whitmorekevinj.itch.io/one-button-gets-you-there" target="_blank" rel="noopener">One Button Gets You There: Ein-Tasten-Balance</a>
+  </div>
+</section>
+
+</div>
