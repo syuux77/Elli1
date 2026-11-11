@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>QR-Karte · Elli lernt laufen</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@700;800&display=swap">
+<style>
+:root{--ink:#4A3557;--muted:#8F7A9C;--pink:#F28DAE;--lady:#EE7B72}
+*{box-sizing:border-box}
+body{margin:0;background:#F3EEF6;color:var(--ink);font-family:"Nunito",system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;gap:18px;padding:24px 16px}
+.cards{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+.card{width:105mm;height:148mm;background:linear-gradient(#E6DDF7,#FCE3EA 70%,#F6D9B8 70%);border-radius:6mm;padding:9mm 8mm;display:flex;flex-direction:column;align-items:center;text-align:center;position:relative;overflow:hidden}
+.card h1{font-family:"Fredoka",sans-serif;font-weight:700;font-size:13mm;line-height:.95;margin:0}
+.card h1 span{display:block;color:var(--pink);font-size:15mm}
+.card p{margin:3mm 0 0;font-weight:800;font-size:4mm}
+.qr{background:#fff;padding:4mm;border-radius:4mm;margin-top:5mm}
+.qr svg{display:block;width:42mm;height:42mm}
+.elli{position:absolute;left:7mm;bottom:6mm;width:22mm}
+.lady{position:absolute;right:10mm;bottom:14mm;width:10mm}
+.foot{position:absolute;right:8mm;bottom:6mm;font-family:"Fredoka",sans-serif;font-weight:600;font-size:3.6mm;color:var(--ink);text-align:right;line-height:1.3}
+.url{font-size:3mm;color:var(--muted);margin-top:2mm;word-break:break-all}
+.tools{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
+.tools input{width:min(420px,90vw);padding:9px 12px;border-radius:10px;border:2px solid #E7DCEB;font:inherit}
+button{font:inherit;font-family:"Fredoka",sans-serif;font-weight:600;border:0;border-radius:12px;padding:10px 18px;background:var(--pink);color:#fff;cursor:pointer}
+@media print{body{background:#fff;padding:0}.tools,.hint{display:none}.card{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="tools">
+  <input id="url" aria-label="Spiel-Adresse">
+  <button id="print">Drucken</button>
+</div>
+<p class="hint">Zwei Karten pro A4-Seite (A6). Ausschneiden, knicken oder in einen Bilderrahmen stellen.</p>
+<div class="cards" id="cards"></div>
+
+<script src="js/vendor/qrcode-generator.js"></script>
+<script src="js/art.js"></script>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var def = params.get('url') || location.href.replace(/qr\.html.*$/, '');
+  var input = document.getElementById('url');
+  input.value = def;
+  function render() {
+    var url = input.value.trim();
+    var wrap = document.getElementById('cards');
+    wrap.innerHTML = '';
+    for (var i = 0; i < 2; i++) {
+      var c = document.createElement('div');
+      c.className = 'card';
+      c.innerHTML = '<h1>Elli<span>lernt laufen</span></h1>' +
+        '<p>Scan mich und hilf Elli bei ihren ersten Schritten!</p>' +
+        '<div class="qr"></div><div class="url"></div>' +
+        '<img class="elli" alt=""><img class="lady" alt="">' +
+        '<div class="foot">Bestenliste:<br>Siegerehrung<br>zum Kuchen</div>';
+      wrap.appendChild(c);
+      c.querySelector('.url').textContent = url.replace(/^https?:\/\//, '');
+      c.querySelector('.elli').src = ELLI_ART.dataUri('elliFull');
+      c.querySelector('.lady').src = ELLI_ART.dataUri('ladybug');
+      var qr = qrcode(0, 'M');
+      qr.addData(url);
+      qr.make();
+      c.querySelector('.qr').innerHTML = qr.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+    }
+  }
+  input.addEventListener('change', render);
+  document.getElementById('print').addEventListener('click', function () { window.print(); });
+  render();
+})();
+</script>
+</body>
+</html>
